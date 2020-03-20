@@ -37,8 +37,16 @@ public class Board {
     private ArrayList<ArrayList<Integer>> initializeBoard(){
         ArrayList<ArrayList<Integer>> board = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> row = new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0));
+        ArrayList<Integer> row1 = new ArrayList<Integer>(Arrays.asList(0,0,0,1,2,0,0,0));
+        ArrayList<Integer> row2 = new ArrayList<Integer>(Arrays.asList(0,0,0,2,1,0,0,0));
         for (int i=0; i<boardSize; i++){
-            board.add(row);
+            if (i == 3) {
+                board.add(row1);
+            } else if (i == 4){
+                board.add(row2);
+            } else {
+                board.add(row);
+            }
         }
         return board;
     }
