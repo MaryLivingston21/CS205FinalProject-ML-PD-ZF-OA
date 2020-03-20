@@ -3,27 +3,13 @@ import java.util.*;
 import java.util.ArrayList;
 
 public class Board {
-    public ArrayList<ArrayList<Integer>> board;
-    private int boardSize = 8;
+    private final int boardSize = 8;
+    private ArrayList<ArrayList<Integer>> board;
 
     public Board(){
         board = initializeBoard();
     }
 
-//    public static void playPiece(Player p, int r, int c){
-//        if (isValidMove(p,r,c)){
-//
-//        }
-//
-//    }
-//
-//    public static boolean isValidMove(Player p, int r, int c){
-//
-//    }
-//
-//    public static ArrayList<ArrayList<Integer>> getValidMoves(Player p){
-//
-//    }
 
     @Override
     public String toString(){
@@ -38,7 +24,13 @@ public class Board {
         return s;
     }
 
-    public  ArrayList<ArrayList<Integer>> getBoard(){
+    public int adjustBoard(Player p, int r, int c){
+        int count = 0;
+
+        return count;
+    }
+
+    public ArrayList<ArrayList<Integer>> getBoard(){
         return board;
     }
 
