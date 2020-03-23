@@ -34,9 +34,8 @@ public class Game {
     }
 
     public static boolean isValidMove(Player p, int r, int c){
-        //TODO:: determine whether valid move
         boolean isValid = false;
-        //get all valid moves
+        //TODO::get all valid moves
         // if move is in valid moves --> isValid = true
         return isValid;
     }
