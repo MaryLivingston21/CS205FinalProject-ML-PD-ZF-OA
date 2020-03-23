@@ -25,8 +25,8 @@ public class Board {
     }
 
     public int adjustBoard(Player p, int r, int c){
-        int count = 0;
-
+        int count = 0; //count for number of pieces flipped
+        //Todo:this
         return count;
     }
 
