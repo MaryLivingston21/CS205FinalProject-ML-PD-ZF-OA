@@ -11,7 +11,7 @@ public class Game {
         whoseTurn = players.get(0);
     }
 
-    public void playPiece(int r, int c){
+    public boolean playPiece(int r, int c){
         Player currP;
         Player otherP;
         if (whoseTurn == players.get(0)){
@@ -27,10 +27,14 @@ public class Game {
             currP.adjustScore(points + 1);
             otherP.adjustScore(points * -1);
             whoseTurn = otherP;
+            return true;
         }
+        //if not valid move
+        return false;
+    }
 
-        //TODO:: option to pass if you can't / don't want to play -> adjusts whose turn it is
-
+    public void passTurn(Player p){
+        //TODO: adjust whose turn it is
     }
 
     public static boolean isValidMove(Player p, int r, int c){
