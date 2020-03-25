@@ -25,4 +25,21 @@ public class Square {
         return userNumber;
     }
 
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        } else if (this == other) {
+            return true;
+        } else if (other.getClass() != this.getClass()) {
+            return false;
+        } else {
+            Square sOther = (Square)other;
+            if (this.row == sOther.getRow() && this.getCol() == sOther.getCol() && this.getUser() == sOther.getUser()){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
 }

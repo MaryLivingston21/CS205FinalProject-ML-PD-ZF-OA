@@ -4,27 +4,24 @@ import java.util.ArrayList;
 
 public class Board {
     private final int boardSize = 8;
-    private ArrayList<ArrayList<Integer>> board;
     private ArrayList<Square> boardOfSquares;
 
     public Board(){
-        board = initializeBoard();
-        boardOfSquares = initializeBoard2();
+        boardOfSquares = initializeBoard();
     }
 
 
     @Override
     public String toString(){
-        //TODO: FIX THIS METHOD SO IT WORKS WITH ARRAYLIST<SQUARES>
-        String s = "";
-        for (int i=0; i < board.size(); i++){
-            ArrayList<Integer> row = board.get(i);
-            for (int j=0; j < row.size(); j++){
-                s = s + (row.get(j) + " ");
+        String board = "";
+        for (int i = 0; i<boardOfSquares.size(); i++){
+            Square s = boardOfSquares.get(i);
+            board = board + (s.getUser() + " ");
+            if (s.getCol() == 8){
+                board = board + "\n";
             }
-            s = s + "\n";
         }
-        return s;
+        return board;
     }
 
     public int adjustBoard(Player p, Square s1, Square s2){
@@ -35,28 +32,11 @@ public class Board {
         return count;
     }
 
-    public ArrayList<ArrayList<Integer>> getBoard(){
-        return board;
+    public ArrayList<Square> getBoard(){
+        return boardOfSquares;
     }
 
-    private ArrayList<ArrayList<Integer>> initializeBoard(){
-        ArrayList<ArrayList<Integer>> board = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> row = new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0));
-        ArrayList<Integer> row1 = new ArrayList<Integer>(Arrays.asList(0,0,0,1,2,0,0,0));
-        ArrayList<Integer> row2 = new ArrayList<Integer>(Arrays.asList(0,0,0,2,1,0,0,0));
-        for (int i=0; i<boardSize; i++){
-            if (i == 3) {
-                board.add(row1);
-            } else if (i == 4){
-                board.add(row2);
-            } else {
-                board.add(row);
-            }
-        }
-        return board;
-    }
-
-    private ArrayList<Square> initializeBoard2(){
+    private ArrayList<Square> initializeBoard(){
         ArrayList<Square> board = new ArrayList<Square>();
         for (int r=1; r < 9; r++){
             for (int c=1; c <9; c++){
