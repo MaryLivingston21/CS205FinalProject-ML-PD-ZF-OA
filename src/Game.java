@@ -11,7 +11,7 @@ public class Game {
         whoseTurn = players.get(0);
     }
 
-    public boolean playPiece(int r, int c){
+    public boolean playPiece(Square s){
         Player currP;
         Player otherP;
         if (whoseTurn == players.get(0)){
@@ -21,27 +21,34 @@ public class Game {
             currP = players.get(1);
             otherP = players.get(0);
         }
-
-        if (isValidMove(currP,r,c)){
-            int points = gameBoard.adjustBoard(currP,r,c);
+        ArrayList<Square> listOfSquares = isValidMove(currP, s);
+        Square s1 = listOfSquares.get(0);
+        Square s2 = listOfSquares.get(1);
+        if (s1.getCol() != -1){
+            int points = gameBoard.adjustBoard(currP,s1,s2);
             currP.adjustScore(points + 1);
             otherP.adjustScore(points * -1);
             whoseTurn = otherP;
             return true;
+        } else {
+            //if not valid move
+            return false;
         }
-        //if not valid move
-        return false;
     }
 
     public void passTurn(Player p){
         //TODO: adjust whose turn it is
     }
 
-    public static boolean isValidMove(Player p, int r, int c){
-        boolean isValid = false;
+    public static ArrayList<Square> isValidMove(Player p, Square s){
+        ArrayList<Square> arrayOfSquares  = new ArrayList<Square>();
         //TODO::get all valid moves
-        // if move is in valid moves --> isValid = true
-        return isValid;
+        // return ArrayList<Squares> --> has two squares
+        // if move is in valid moves --> return ArrayList<Squares>
+        //          square where the person placed the piece Square(r,c)
+        //          square on the other end (all piece in-between will be flipped)
+        // else return ArrayList<Squares> where the two squares are Square(-1,-1)
+        return arrayOfSquares;
     }
 
     public static ArrayList<ArrayList<Integer>> getValidMoves(Player p){
