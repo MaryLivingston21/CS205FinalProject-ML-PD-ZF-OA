@@ -29,6 +29,7 @@ public class Board {
         // setUser(p.getPLayerNumber()) for each of the squares being flipped and the square the user just put a piece on
         int count = 0; //count for number of pieces flipped
         //Todo:this
+        // https://www.java67.com/2016/08/how-to-replace-element-of-arraylist-in-java.html 
         return count;
     }
 
