@@ -51,11 +51,18 @@ public class Game {
     }
 
     public static boolean isValidMove(Player p, Square s){
-        ArrayList<Square> arrayOfSquares  = new ArrayList<Square>();
-        //TODO::get all valid moves, if in moves, return true, else false
-        //validMovesd.get(i).get(0) returns empty square user can play on
+        ArrayList<ArrayList<Square>> validMoves  = getValidMoves(p);
+        assert validMoves != null;
+        for (ArrayList<Square> validMove : validMoves) {
+            if (s == validMove.get(0)) {
+                return true;
+            }
+        }
+        return false;
+
+        // NOTES:
+        // validMoves.get(i).get(0) returns empty square user can play on
         // validMoves.get(i).get(1) returns sandwich end square
-        return true;
     }
 
     public static Square getSandwichEnd(Square squarePlayedOn){
