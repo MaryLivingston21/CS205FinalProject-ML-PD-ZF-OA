@@ -29,7 +29,7 @@ public class OthelloBackEnd {
 
         Scanner s = new Scanner(System.in);
 
-        System.out.print("")
+        System.out.print("");
     }
 
     public static int newGame(){
