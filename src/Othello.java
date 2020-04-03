@@ -32,58 +32,71 @@ import javafx.geometry.Insets;
 import javafx.scene.shape.Circle;
 
 public class Othello extends Application {
-    //Game Object
+    /**
+     * Various Object and Container Declarations. If you add a container, please add it here
+     */
     private Game g;
-    //GridPane that will hold 64 tiles
-    public GridPane gridPane;
-    //BorderPane will hold all other containers
-    public BorderPane borderPane = new BorderPane();
-    //Scene
+    private Board b;
+    public GridPane gridPane; //GridPane that will hold 64 tilePane objects
+    public BorderPane borderPane = new BorderPane(); //BorderPane will hold all other containers(VBox and HBox)
     Scene scene;
-    //TopHbox will hold score for each player, whose turn it is
-    HBox topHBox = new HBox();
-    //BottomHBow will hold buttons such as new game. will hold timer
-    HBox bottomHBox = new HBox();
-    //TitleHBox will hold title
-    VBox titleVBox = new VBox();
-    //VBox to contain players points
-    VBox p1PointsVBox = new VBox(5);
+    HBox topHBox = new HBox();//holds points VBoxes and titleVBox
+    HBox bottomHBox = new HBox();//BottomHBow will hold buttons such as new game,pass turn, timer
+    VBox titleVBox = new VBox();//TitleHBox will hold title
+    VBox p1PointsVBox = new VBox(5);//VBox to contain players points
     VBox p2PointsVBox = new VBox(5);
-    //buttons
-    Button newGame, passTurn;
+    VBox menuVBox = new VBox();//will hold the menu of options
+    Button newGame, passTurn;//buttons
+
     @Override
     public void start(Stage primaryStage){
-        Board b = new Board();
+        b = new Board();
         //TODO:: Change. This is temporary because I'm confused
         ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),new Player(2,"human")));
         g = new Game(b,players);
 
-        //TODO:: Add timer class and create
+        //TODO:: Add timer class and create timer
 
-        //TODO:: Add new game button as well as button event
+        /**
+         *
+         *
+         * Various Buttons. If you add a button please add it here.
+         *
+         *
+         */
         newGame = new Button("New Game");
         newGame.setOnAction(event->
         {
             //TODO::Add fucntionality
         });
+        passTurn = new Button("Pass Turn");
+        passTurn.setOnAction(event->
+        {
+            //TODO::ADD functionality
+        });
 
-        //Construct VBoxes for players points
-        Circle wCircle = new Circle(30, Color.WHITE);
+        /**
+         *
+         * A lot of messy container stuff.
+         *
+         */
+        //Construct VBoxes for players points -> will be contained in topHBox
+        Circle wCircle = new Circle(30, Color.WHITE);//Symbols that represent player
         Circle bCircle = new Circle(30, Color.BLACK);
-        Text p1Points = new Text("0 Points");
+        Text p1Points = new Text("0 Points");//TODO::Construct a function to update these values
         p1Points.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         p1Points.setFill(Color.rgb(102,252,241));
         Text p2Points = new Text("0 Points");
         p2Points.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         p2Points.setFill(Color.rgb(102,252,241));
-        p1PointsVBox.getChildren().addAll(bCircle,p1Points);
+        p1PointsVBox.getChildren().addAll(bCircle,p1Points);//Add circles and texts to VBoxes
         p2PointsVBox.getChildren().addAll(wCircle,p2Points);
-        p1PointsVBox.setAlignment(Pos.CENTER_LEFT);
+        p1PointsVBox.setAlignment(Pos.CENTER_LEFT);//set position in box
         p2PointsVBox.setAlignment(Pos.CENTER_RIGHT);
-        p1PointsVBox.setMinWidth(300);
+        p1PointsVBox.setMinWidth(300);//set width to keep from squishing containers together
         p2PointsVBox.setMinWidth(300);
 
-        //Construct titleVBox and title
+        //Construct titleVBox and title text -> will be contained in topHBox
         Text titleText = new Text("Othello");
         titleText.setFont(Font.font("Arial", FontWeight.BOLD, 40));
         titleText.setFill(Color.rgb(102,252,241));
@@ -93,7 +106,7 @@ public class Othello extends Application {
         titleVBox.getChildren().add(titleText);
 
 
-        //Construct topHBox
+        //Construct topHBox -> contains points and title
         //TODO:: Add Points functionality and whose turn fucntionality
         topHBox.setStyle("-fx-background-color:#1f2833;");
         topHBox.setStyle("fx-border-width:2px;"+ "-fx-border-color:#45a29e;");
@@ -102,7 +115,7 @@ public class Othello extends Application {
         topHBox.setAlignment(Pos.CENTER);
         topHBox.getChildren().addAll(p1PointsVBox,titleVBox,p2PointsVBox);
 
-        //Construct bottomHBox
+        //Construct bottomHBox -> contains buttons and timer(when I add it)
         //TODO:: Addd new game and timer
         bottomHBox.setPadding(new Insets(20));
         bottomHBox.setSpacing(15);
@@ -111,21 +124,20 @@ public class Othello extends Application {
         bottomHBox.setMinHeight(150);
         bottomHBox.setMaxHeight(150);
         bottomHBox.setAlignment(Pos.CENTER);
-
+        bottomHBox.getChildren().addAll(newGame,passTurn);
 
         //Construct board and get gridPane
         setGridPane();
 
-
-        //Add panes to borderpane
+        //Add all panes to borderPane and set style properties of borderPane
         borderPane.setTop(topHBox);
         borderPane.setCenter(gridPane);
         borderPane.setBottom(bottomHBox);
         borderPane.setStyle("-fx-background-color:#1f2833;");
 
+        //Create Scene and setScene
         scene = new Scene(borderPane,1000,1000);
         primaryStage.setScene(scene);
-
         primaryStage.setTitle("Othello");
         primaryStage.show();
     }
@@ -133,6 +145,7 @@ public class Othello extends Application {
     public void handleClick(MouseEvent e) {
 
     }
+    //Method will call drawBoard and set style of properties of gridPane
     public void setGridPane()
     {
         gridPane=drawBoard();
@@ -140,11 +153,9 @@ public class Othello extends Application {
         gridPane.setMinHeight(600);
         gridPane.setMaxWidth(600);
         gridPane.setMinWidth(600);
-        //Give GridPane a border and color it
-        gridPane.setStyle("-fx-border-color:#0A3A2A;"+"-fx-border-width:4px;");
+        gridPane.setStyle("-fx-border-color:#0A3A2A;"+"-fx-border-width:4px;");//Give GridPane a border and color it
     }
-
-
+    //Method will use game class to get tiles and construct tilePanes, and add to gridPane
     public GridPane drawBoard(){
         GridPane gp = new GridPane();
         TilePane tp;
@@ -160,7 +171,6 @@ public class Othello extends Application {
             }
         }
         return gp;
-
     }
     public static void main(String[] args){
         launch(args);
