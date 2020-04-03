@@ -1,3 +1,6 @@
+import java.lang.*;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.ArrayList;
 
 public class Game {
@@ -75,7 +78,8 @@ public class Game {
         //TODO:  return all valid moves for player p ex: ((1,2),(3,5),(6,1))
         //validMovesd.get(i).get(0) returns empty square user can play on
         // validMoves.get(i).get(1) returns sandwich end square
-        return null;
+        ArrayList<Square> s = new ArrayList<Square>(Arrays.asList(new Square(-1,-1)));
+        return new ArrayList<ArrayList<Square>>(Arrays.asList(s,s));
     }
 
     public Player getCurrentPlayer(){
