@@ -26,6 +26,10 @@ public class OthelloBackEnd {
 
         // Initialize a new game
         Game g = new Game(board, players);
+
+        Scanner s = new Scanner(System.in);
+
+        System.out.print("")
     }
 
     public static int newGame(){
