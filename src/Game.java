@@ -37,8 +37,7 @@ public class Game {
     }
 
     /**
-     * Method pass turn takes in Player object
-     * modifies whoseTurn to switch to next player
+     * Method passTurn modifies whoseTurn to switch to next player
      */
     public void passTurn(){
         // if player 1 has turn, pass to player 2
