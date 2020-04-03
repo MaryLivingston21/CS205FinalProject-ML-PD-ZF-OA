@@ -21,9 +21,9 @@ public class Game {
             currP = players.get(1);
             otherP = players.get(0);
         }
-        ArrayList<Square> listOfSquares = isValidMove(currP, s);
-        Square s1 = listOfSquares.get(0);
-        Square s2 = listOfSquares.get(1);
+        boolean isValidMove = isValidMove(currP, s);
+        Square s1 = s;
+        Square s2 = getSandwichEnd(s);
         if (s1.getCol() != -1){
             int points = gameBoard.adjustBoard(currP,s1,s2);
             currP.adjustScore(points + 1);
@@ -50,19 +50,24 @@ public class Game {
         }
     }
 
-    public static ArrayList<Square> isValidMove(Player p, Square s){
+    public static boolean isValidMove(Player p, Square s){
         ArrayList<Square> arrayOfSquares  = new ArrayList<Square>();
-        //TODO::get all valid moves
-        // return ArrayList<Squares> --> has two squares
-        // if move is in valid moves --> return ArrayList<Squares>
-        //          square where the person placed the piece Square(r,c)
-        //          square on the other end (all piece in-between will be flipped)
-        // else return ArrayList<Squares> where the two squares are Square(-1,-1)
-        return arrayOfSquares;
+        //TODO::get all valid moves, if in moves, return true, else false
+        //validMovesd.get(i).get(0) returns empty square user can play on
+        // validMoves.get(i).get(1) returns sandwich end square
+        return true;
     }
 
-    public static ArrayList<ArrayList<Integer>> getValidMoves(Player p){
+    public static Square getSandwichEnd(Square squarePlayedOn){
+        //TODO: THIS --> MARY
+        return new Square(-1,-1);
+    }
+
+
+    public static ArrayList<ArrayList<Square>> getValidMoves(Player p){
         //TODO:  return all valid moves for player p ex: ((1,2),(3,5),(6,1))
+        //validMovesd.get(i).get(0) returns empty square user can play on
+        // validMoves.get(i).get(1) returns sandwich end square
         return null;
     }
 
