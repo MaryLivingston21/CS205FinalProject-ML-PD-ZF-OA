@@ -15,7 +15,7 @@ public class TilePane extends HBox{
     public int row,col;
     private int control;
     private boolean isValid;
-
+    private Color red = Color.web("#429E9D");
     /**
      Sole Constructor that writes text and displays unselected Tile HBoxes
      @param s is a tile object from which the tilepane will be contructed from
@@ -34,13 +34,13 @@ public class TilePane extends HBox{
         //set alignment of TilePane
         this.setAlignment(Pos.CENTER);
         //set size dimensions of tile pane
-        this.setPrefSize(50, 50);
+        this.setPrefSize(75, 75);
         //sets width and color of border initially 
         setBorderStyle(isValid);
         //create Circle object with information from tile object
         piece = new Circle();
         //set radius
-        piece.setRadius(15.0f);
+        piece.setRadius(30.0f);
         //set Position in pane
         piece.setCenterX(25.0f);
         piece.setCenterY(25.0f);
@@ -61,7 +61,7 @@ public class TilePane extends HBox{
         //Update circle color
         if(s.getUser()==0){
             //Color will be changed later
-            piece.setFill(Color.GRAY);
+            piece.setFill(red);
         }
         else if(s.getUser()==1){
             piece.setFill(Color.BLACK);
@@ -74,11 +74,11 @@ public class TilePane extends HBox{
     public void setBorderStyle(boolean isValid){
         if(isValid){
             this.setStyle("-fx-border-width: 1;" +
-                    "-fx-border-color:#000000;"+"-fx-background-color:#36893C;");
+                    "-fx-border-color:#FFFFFF;"+"-fx-background-color:#429E9D;");
         }
         else{
             this.setStyle("-fx-border-width: 1;" +
-                    "-fx-border-color:#FFFFFF;"+"-fx-background-color:#36893C;");
+                    "-fx-border-color:#0A3A2A;"+"-fx-background-color:#429E9D;");
         }
     }
     public Square getSquare()

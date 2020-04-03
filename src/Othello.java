@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 
 import javafx.geometry.Pos;
 import javafx.scene.text.Text;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 
@@ -26,6 +27,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.geometry.Insets;
+import javafx.scene.shape.Circle;
 
 public class Othello extends Application {
     //Game Object
@@ -40,8 +42,13 @@ public class Othello extends Application {
     HBox topHBox = new HBox();
     //BottomHBow will hold buttons such as new game. will hold timer
     HBox bottomHBox = new HBox();
+    //TitleHBox will hold title
+    HBox titleHBox = new HBox();
+    //VBox to contain players points
+    VBox p1PointsVBox;
+    VBox p2PointsVBox;
     //buttons
-    Button newGame;
+    Button newGame, passTurn;
     @Override
     public void start(Stage primaryStage){
         Board b = new Board();
@@ -58,22 +65,37 @@ public class Othello extends Application {
             //TODO::Add fucntionality
         });
 
+        //Construct Title HBox and title
+        Text titleText = new Text("Othello");
+        titleText.setFont(Font.font("Arial", FontWeight.BOLD, 40));
+        titleText.setFill(Color.web("#0A3A2A"));
+        topHBox.setStyle("-fx-background-color:#1f2833;");
+        topHBox.setStyle("fx-border-width:2px;"+ "-fx-border-color:#000000;");
+        topHBox.setMinHeight(20);
+        topHBox.setMaxHeight(20);
+        topHBox.setAlignment(Pos.CENTER);
+        topHBox.getChildren().add(titleText);
+
+        //Construct VBoxes for players points
+
+
+
         //Construct topHBox
         //TODO:: Add Points functionality and whose turn fucntionality
         topHBox.setStyle("-fx-background-color:#1f2833;");
         topHBox.setStyle("fx-border-width:2px;"+ "-fx-border-color:#45a29e;");
-        topHBox.setMinHeight(80);
-        topHBox.setMaxHeight(80);
+        topHBox.setMinHeight(150);
+        topHBox.setMaxHeight(150);
         topHBox.setAlignment(Pos.CENTER);
-
+        topHBox.getChildren().add(titleHBox);
         //Construct bottomHBox
         //TODO:: Addd new game and timer
         bottomHBox.setPadding(new Insets(20));
         bottomHBox.setSpacing(15);
         bottomHBox.setStyle("-fx-background-color:#1f2833;");
         bottomHBox.setStyle("fx-border-width:2px;"+ "-fx-border-color:#45a29e;");
-        bottomHBox.setMinHeight(80);
-        bottomHBox.setMaxHeight(80);
+        bottomHBox.setMinHeight(150);
+        bottomHBox.setMaxHeight(150);
         bottomHBox.setAlignment(Pos.CENTER);
 
 
@@ -99,12 +121,12 @@ public class Othello extends Application {
     public void setGridPane()
     {
         gridPane=drawBoard();
-        gridPane.setMaxHeight(400);
-        gridPane.setMinHeight(400);
-        gridPane.setMaxWidth(400);
-        gridPane.setMinWidth(400);
+        gridPane.setMaxHeight(600);
+        gridPane.setMinHeight(600);
+        gridPane.setMaxWidth(600);
+        gridPane.setMinWidth(600);
         //Give GridPane a border and color it
-        gridPane.setStyle("-fx-border-color:#45a29e;"+"-fx-border-width:4px;");
+        gridPane.setStyle("-fx-border-color:#0A3A2A;"+"-fx-border-width:4px;");
     }
 
 
