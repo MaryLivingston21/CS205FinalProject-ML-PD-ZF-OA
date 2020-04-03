@@ -31,6 +31,7 @@ public class OthelloBackEnd {
 
     }
 
+    //test
     public static void playerMenu(Game g, Player p){
 
 
