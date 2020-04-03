@@ -14,6 +14,7 @@ public class TilePane extends HBox{
     private  Circle piece; //Circle object whose color will change depend on who controls the board
     public int row,col;
     private int control;
+    private boolean isValid;
 
     /**
      Sole Constructor that writes text and displays unselected Tile HBoxes
@@ -26,6 +27,8 @@ public class TilePane extends HBox{
         row=s.getRow();
         col=s.getCol();
         control = s.getUser();
+        //isValid = s.isValidMove();
+        isValid = false;
 
 
         //set alignment of TilePane
@@ -33,9 +36,7 @@ public class TilePane extends HBox{
         //set size dimensions of tile pane
         this.setPrefSize(50, 50);
         //sets width and color of border initially 
-        this.setStyle("-fx-border-width: 1;" +
-                "-fx-border-color:#000000;"+"-fx-background-color:#36893C;");
-
+        setBorderStyle(isValid);
         //create Circle object with information from tile object
         piece = new Circle();
         //set radius
@@ -67,6 +68,17 @@ public class TilePane extends HBox{
         }
         else{
             piece.setFill(Color.WHITE);
+        }
+    }
+    //Will set border style depending on if this square is a valid move
+    public void setBorderStyle(boolean isValid){
+        if(isValid){
+            this.setStyle("-fx-border-width: 1;" +
+                    "-fx-border-color:#000000;"+"-fx-background-color:#36893C;");
+        }
+        else{
+            this.setStyle("-fx-border-width: 1;" +
+                    "-fx-border-color:#FFFFFF;"+"-fx-background-color:#36893C;");
         }
     }
     public Square getSquare()
