@@ -27,7 +27,14 @@ public class OthelloBackEnd {
         // Initialize a new game
         Game g = new Game(board, players);
 
-        playerMenu(g, players.get(0));
+        //right now set to run for 100 turns for testing purposes
+        for (int i = 0; i < 100; i++){
+            playerMenu(g, g.getCurrentPlayer());
+            System.out.println("\r\n\r\n\r\n");
+            System.out.print(board);
+            System.out.println("\r\n\r\n\r\n");
+        }
+
 
     }
 
@@ -55,7 +62,8 @@ public class OthelloBackEnd {
             int chosenCol = s.nextInt();
 
             //call game method playPiece on the chosen square
-            g.playPiece(g.getSquare(chosenRow,chosenCol));
+            Square chosenSq = g.getSquare(chosenRow,chosenCol);
+            g.playPiece(chosenSq);
 
         }
         //if the user did not say yes

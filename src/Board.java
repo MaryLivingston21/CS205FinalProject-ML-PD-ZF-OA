@@ -25,6 +25,7 @@ public class Board {
     }
 
     public int adjustBoard(Player p, Square s1, Square s2){
+        System.out.println("Running adjustBoard between  ("+s1.getRow()+","+s1.getCol()+") and ("+s2.getRow()+","+s2.getCol()+")");
         //s1 is the square played, s2 is the square on the other side of the sandwich (middle pieces flipped)
         // setUser(p.getPLayerNumber()) for each of the squares being flipped and the square the user just put a piece on
         int count = 0; //count for number of pieces flipped
