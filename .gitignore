@@ -28,3 +28,4 @@ hs_err_pid*
 #intelliJ config (we should all have config that works on our own machines)
 *.idea
 
+CS205othello.iml
