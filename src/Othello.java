@@ -4,6 +4,7 @@ import javafx.stage.Stage;
 
 import javafx.scene.Scene;
 import javafx.scene.Node;
+import javafx.scene.Group;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Rectangle;
 
 import javafx.geometry.Pos;
 import javafx.scene.text.Text;
@@ -43,16 +45,16 @@ public class Othello extends Application {
     //BottomHBow will hold buttons such as new game. will hold timer
     HBox bottomHBox = new HBox();
     //TitleHBox will hold title
-    HBox titleHBox = new HBox();
+    VBox titleVBox = new VBox();
     //VBox to contain players points
-    VBox p1PointsVBox;
-    VBox p2PointsVBox; 
+    VBox p1PointsVBox = new VBox(5);
+    VBox p2PointsVBox = new VBox(5);
     //buttons
     Button newGame, passTurn;
     @Override
     public void start(Stage primaryStage){
         Board b = new Board();
-        //TODO:: Change. This is tempory because I'm confused
+        //TODO:: Change. This is temporary because I'm confused
         ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),new Player(2,"human")));
         g = new Game(b,players);
 
@@ -65,19 +67,30 @@ public class Othello extends Application {
             //TODO::Add fucntionality
         });
 
-        //Construct Title HBox and title
+        //Construct VBoxes for players points
+        Circle wCircle = new Circle(30, Color.WHITE);
+        Circle bCircle = new Circle(30, Color.BLACK);
+        Text p1Points = new Text("0 Points");
+        p1Points.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        p1Points.setFill(Color.rgb(102,252,241));
+        Text p2Points = new Text("0 Points");
+        p2Points.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        p2Points.setFill(Color.rgb(102,252,241));
+        p1PointsVBox.getChildren().addAll(bCircle,p1Points);
+        p2PointsVBox.getChildren().addAll(wCircle,p2Points);
+        p1PointsVBox.setAlignment(Pos.CENTER_LEFT);
+        p2PointsVBox.setAlignment(Pos.CENTER_RIGHT);
+        p1PointsVBox.setMinWidth(300);
+        p2PointsVBox.setMinWidth(300);
+
+        //Construct titleVBox and title
         Text titleText = new Text("Othello");
         titleText.setFont(Font.font("Arial", FontWeight.BOLD, 40));
-        titleText.setFill(Color.web("#0A3A2A"));
-        topHBox.setStyle("-fx-background-color:#1f2833;");
-        topHBox.setStyle("fx-border-width:2px;"+ "-fx-border-color:#000000;");
-        topHBox.setMinHeight(20);
-        topHBox.setMaxHeight(20);
-        topHBox.setAlignment(Pos.CENTER);
-        topHBox.getChildren().add(titleText);
-
-        //Construct VBoxes for players points
-
+        titleText.setFill(Color.rgb(102,252,241));
+        titleVBox.setMinHeight(20);
+        titleVBox.setMaxHeight(20);
+        titleVBox.setAlignment(Pos.CENTER);
+        titleVBox.getChildren().add(titleText);
 
 
         //Construct topHBox
@@ -87,7 +100,8 @@ public class Othello extends Application {
         topHBox.setMinHeight(150);
         topHBox.setMaxHeight(150);
         topHBox.setAlignment(Pos.CENTER);
-        topHBox.getChildren().add(titleHBox);
+        topHBox.getChildren().addAll(p1PointsVBox,titleVBox,p2PointsVBox);
+
         //Construct bottomHBox
         //TODO:: Addd new game and timer
         bottomHBox.setPadding(new Insets(20));
@@ -107,6 +121,7 @@ public class Othello extends Application {
         borderPane.setTop(topHBox);
         borderPane.setCenter(gridPane);
         borderPane.setBottom(bottomHBox);
+        borderPane.setStyle("-fx-background-color:#1f2833;");
 
         scene = new Scene(borderPane,1000,1000);
         primaryStage.setScene(scene);
