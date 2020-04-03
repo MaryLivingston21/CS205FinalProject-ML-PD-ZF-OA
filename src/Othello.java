@@ -46,7 +46,7 @@ public class Othello extends Application {
     HBox titleHBox = new HBox();
     //VBox to contain players points
     VBox p1PointsVBox;
-    VBox p2PointsVBox;
+    VBox p2PointsVBox; 
     //buttons
     Button newGame, passTurn;
     @Override
