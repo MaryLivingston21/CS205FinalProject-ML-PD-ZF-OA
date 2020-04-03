@@ -46,7 +46,9 @@ public class Othello extends Application {
     VBox p1PointsVBox = new VBox(5);//VBox to contain players points
     VBox p2PointsVBox = new VBox(5);
     VBox menuVBox = new VBox();//will hold the menu of options
+    VBox ruleVBox = new VBox();//will contain rules
     Button newGame, passTurn;//buttons
+    Pane menuPane, rulePane; //panes to hold text
 
     @Override
     public void start(Stage primaryStage){
@@ -126,11 +128,29 @@ public class Othello extends Application {
         bottomHBox.setAlignment(Pos.CENTER);
         bottomHBox.getChildren().addAll(newGame,passTurn);
 
+        //Construct menuVBox -> will hold the menu of options
+        Text menuText = new Text("Menu");
+        menuText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        menuText.setFill(Color.rgb(102,252,241));
+        menuPane = new Pane(menuText);
+        menuVBox.getChildren().add(menuText);
+        menuVBox.setPadding(new Insets(20,20,20,100));
+
+        //Construct ruleVBox -> will hold the menu of options
+        Text ruleText = new Text("Rules");
+        ruleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        ruleText.setFill(Color.rgb(102,252,241));
+        rulePane = new Pane(ruleText);
+        ruleVBox.getChildren().add(ruleText);
+        ruleVBox.setPadding(new Insets(20,100,20,20));
+
         //Construct board and get gridPane
         setGridPane();
 
         //Add all panes to borderPane and set style properties of borderPane
         borderPane.setTop(topHBox);
+        borderPane.setRight(ruleVBox);
+        borderPane.setLeft(menuVBox);
         borderPane.setCenter(gridPane);
         borderPane.setBottom(bottomHBox);
         borderPane.setStyle("-fx-background-color:#1f2833;");
