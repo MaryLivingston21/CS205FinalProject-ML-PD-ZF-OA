@@ -63,4 +63,11 @@ public class Game {
     public int getScore(Player p){
         return p.getScore();
     }
+
+    public Square getSquare(int r, int c)
+    {
+
+        return gameBoard.getSquare(r,c);
+
+    }
 }

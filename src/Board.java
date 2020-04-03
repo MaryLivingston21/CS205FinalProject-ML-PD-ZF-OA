@@ -57,6 +57,19 @@ public class Board {
         }
         return board;
     }
+    public Square getSquare(int r, int c)
+    {
+        //t1 is the tile at row and column specified
+        if((r<9)&&(c<9)){
+            for(int i=0; i<boardOfSquares.size();i++){
+                if(boardOfSquares.get(i).getCol()==c &&boardOfSquares.get(i).getRow()==r){
+                    return boardOfSquares.get(i);
+                }
+            }
+        }
+        Square s =null;
+        return s;
+    }
 
     //TODO:: Does this need an overridden equals method?
 }

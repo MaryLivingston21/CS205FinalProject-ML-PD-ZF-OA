@@ -42,4 +42,22 @@ public class Othello extends Application {
         //launch(args);
     }
 
+
+    public GridPane drawBoard(){
+        GridPane gp = new GridPane();
+        TilePane tp;
+        Square s;
+        for(int r=1; r<9;r++)
+        {
+            for(int c=1;c<9;c++)
+            {
+                s=g.getSquare(r,c);//get Tile object from game(which gets it from board)
+                tp=new TilePane(s);
+                tp.setOnMouseClicked(this::handleClick);
+                gp.add(tp,c,r);
+            }
+        }
+        return gp;
+
+    }
 }
