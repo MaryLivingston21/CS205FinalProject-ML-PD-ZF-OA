@@ -27,11 +27,42 @@ public class OthelloBackEnd {
         // Initialize a new game
         Game g = new Game(board, players);
 
-        Scanner s = new Scanner(System.in);
 
-        System.out.print("");
     }
 
+    public void playerMenu(Game g, Player p){
+        Scanner s = new Scanner(System.in);
+
+        //Tell the user it's their turn
+        System.out.println("Player "+p.getPlayerNumber()+", it\'s your turn!");
+
+        //ask if the user would like to take a turn
+        System.out.print("Take a turn (y/n)? ");
+        String answer = s.nextLine();
+
+        //if they say yes
+        if(answer == "y" || answer == "Y"){
+
+            //prompt and save row
+            System.out.print("Enter row: ");
+            int chosenRow = s.nextInt();
+
+            //prompt and save column
+            System.out.print("Enter column: ");
+            int chosenCol = s.nextInt();
+
+            //call game method playPiece on the chosen square
+            g.playPiece(g.getSquare(chosenRow,chosenCol));
+
+        }
+        //if the user did not say yes
+        else{
+            //output to user
+            System.out.println("You skipped your turn");
+            //call game passTurn method
+            g.passTurn();
+        }
+    }
     public static int newGame(){
         // Prompt user and get input
         System.out.println("Type 1 to play against the computer, or 2 to play against a human: ");
