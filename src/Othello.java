@@ -47,7 +47,7 @@ public class Othello extends Application {
     VBox p2PointsVBox = new VBox(5);
     VBox menuVBox = new VBox();//will hold the menu of options
     VBox ruleVBox = new VBox();//will contain rules
-    Button newGame, passTurn;//buttons
+    Button newGameButton, passTurnButton,exitButton;//buttons
     Pane menuPane, rulePane; //panes to hold text
 
     @Override
@@ -66,15 +66,24 @@ public class Othello extends Application {
          *
          *
          */
-        newGame = new Button("New Game");
-        newGame.setOnAction(event->
+        newGameButton = new Button("New Game");
+        newGameButton.setStyle("-fx-background-color:#66fcf1;");
+        newGameButton.setOnAction(event->
         {
             //TODO::Add fucntionality
         });
-        passTurn = new Button("Pass Turn");
-        passTurn.setOnAction(event->
+        passTurnButton = new Button("Pass Turn");
+        passTurnButton.setStyle("-fx-background-color:#66fcf1;");
+        passTurnButton.setOnAction(event->
         {
             //TODO::ADD functionality
+        });
+        exitButton = new Button("Exit Program");
+        exitButton.setStyle("-fx-background-color:#66fcf1;");
+        exitButton.setOnAction(event ->
+        {
+            Platform.exit();
+
         });
 
         /**
@@ -126,7 +135,7 @@ public class Othello extends Application {
         bottomHBox.setMinHeight(150);
         bottomHBox.setMaxHeight(150);
         bottomHBox.setAlignment(Pos.CENTER);
-        bottomHBox.getChildren().addAll(newGame,passTurn);
+        bottomHBox.getChildren().addAll(newGameButton,passTurnButton,exitButton);
 
         //Construct menuVBox -> will hold the menu of options
         Text menuText = new Text("Menu");
@@ -134,7 +143,9 @@ public class Othello extends Application {
         menuText.setFill(Color.rgb(102,252,241));
         menuPane = new Pane(menuText);
         menuVBox.getChildren().add(menuText);
-        menuVBox.setPadding(new Insets(20,20,20,100));
+        menuVBox.setPadding(new Insets(20,100,20,100));
+        menuVBox.setStyle("-fx-border-color:#45a29e; -fx-border-width : 0 2 0 2 ");
+        menuVBox.setMinWidth(300);
 
         //Construct ruleVBox -> will hold the menu of options
         Text ruleText = new Text("Rules");
@@ -142,7 +153,9 @@ public class Othello extends Application {
         ruleText.setFill(Color.rgb(102,252,241));
         rulePane = new Pane(ruleText);
         ruleVBox.getChildren().add(ruleText);
-        ruleVBox.setPadding(new Insets(20,100,20,20));
+        ruleVBox.setPadding(new Insets(20,100,20,100));
+        ruleVBox.setStyle("-fx-border-color:#45a29e; -fx-border-width : 0 2 0 2 ");
+        ruleVBox.setMinWidth(300);
 
         //Construct board and get gridPane
         setGridPane();
@@ -156,7 +169,7 @@ public class Othello extends Application {
         borderPane.setStyle("-fx-background-color:#1f2833;");
 
         //Create Scene and setScene
-        scene = new Scene(borderPane,1000,1000);
+        scene = new Scene(borderPane,1300,1000);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Othello");
         primaryStage.show();
