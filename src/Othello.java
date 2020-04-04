@@ -31,6 +31,8 @@ import java.util.Arrays;
 import javafx.geometry.Insets;
 import javafx.scene.shape.Circle;
 
+import javax.swing.text.View;
+
 public class Othello extends Application {
     /**
      * Various Object and Container Declarations. If you add a container, please add it here
@@ -43,6 +45,7 @@ public class Othello extends Application {
     HBox topHBox = new HBox();//holds points VBoxes and titleVBox
     HBox bottomHBox = new HBox();//BottomHBow will hold buttons such as new game,pass turn, timer
     VBox titleVBox = new VBox();//TitleHBox will hold title
+    VBox messageVBox = new VBox();//will contain messages that update, such as whose turn, if the game in ended, if a move is invalid, ect.
     VBox p1PointsVBox = new VBox(5);//VBox to contain players points
     VBox p2PointsVBox = new VBox(5);
     VBox menuVBox = new VBox();//will hold the menu of options
@@ -78,6 +81,7 @@ public class Othello extends Application {
         {
             //TODO::ADD functionality
         });
+
         exitButton = new Button("Exit Program");
         exitButton.setStyle("-fx-background-color:#66fcf1;");
         exitButton.setOnAction(event ->
@@ -88,16 +92,16 @@ public class Othello extends Application {
 
         /**
          *
-         * A lot of messy container stuff.
+         * A lot of messy container stuff. All Boxes and Texts
          *
          */
         //Construct VBoxes for players points -> will be contained in topHBox
         Circle wCircle = new Circle(30, Color.WHITE);//Symbols that represent player
         Circle bCircle = new Circle(30, Color.BLACK);
-        Text p1Points = new Text("0 Points");//TODO::Construct a function to update these values
+        Text p1Points = new Text("2 Pieces");//TODO::Construct a function to update these values
         p1Points.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         p1Points.setFill(Color.rgb(102,252,241));
-        Text p2Points = new Text("0 Points");
+        Text p2Points = new Text("2 Pieces");
         p2Points.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         p2Points.setFill(Color.rgb(102,252,241));
         p1PointsVBox.getChildren().addAll(bCircle,p1Points);//Add circles and texts to VBoxes
@@ -115,7 +119,6 @@ public class Othello extends Application {
         titleVBox.setMaxHeight(20);
         titleVBox.setAlignment(Pos.CENTER);
         titleVBox.getChildren().add(titleText);
-
 
         //Construct topHBox -> contains points and title
         //TODO:: Add Points functionality and whose turn fucntionality
@@ -146,30 +149,55 @@ public class Othello extends Application {
         menuVBox.setPadding(new Insets(20,100,20,100));
         menuVBox.setStyle("-fx-border-color:#45a29e; -fx-border-width : 0 2 0 2 ");
         menuVBox.setMinWidth(300);
+        menuVBox.setMaxWidth(300);
 
         //Construct ruleVBox -> will hold the menu of options
-        Text ruleText = new Text("Rules");
+        Text ruleText = new Text();
+        ruleText.setText("\n          Rules:\n\n-The objective of the\n game is to have the\n most pieces flipped\n to your color when\n the game ends" +
+                "\n\n-Flip opponents pieces\n to your color by\n sandwiching their\n pieces between\n your own. This can\n be done horizontally," +
+                "\n vertically or diagonally\n\n"+ "-You can only place\n pieces adjacent to\n " +
+                "your opponents pieces\n in a move that\n that would sandwich\n one or more of \n their pieces\n\n-The game ends when\n no more valid\n" +
+                " moves exist\n\n   Good Luck!");
         ruleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         ruleText.setFill(Color.rgb(102,252,241));
         rulePane = new Pane(ruleText);
         ruleVBox.getChildren().add(ruleText);
-        ruleVBox.setPadding(new Insets(20,100,20,100));
+        ruleVBox.setPadding(new Insets(20,50,20,50));
         ruleVBox.setStyle("-fx-border-color:#45a29e; -fx-border-width : 0 2 0 2 ");
         ruleVBox.setMinWidth(300);
+        ruleVBox.setMaxWidth(300);
 
         //Construct board and get gridPane
+        VBox middle = new VBox();
         setGridPane();
+
+        //Construct messageVBox and message text. Message text will be updated through out game
+        Text messageText = new Text("Messages");
+        messageText.setFill(Color.rgb(102,252,241));
+        messageText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+        messageVBox.setMaxHeight(50);
+        messageVBox.setMinHeight(50);
+        messageVBox.setMinWidth(400);
+        messageVBox.setAlignment(Pos.CENTER);
+        messageVBox.setPadding(new Insets(0,0,20,0));
+        messageVBox.getChildren().add(messageText);
+        middle.getChildren().addAll(messageVBox,gridPane);
+        middle.setAlignment(Pos.CENTER);
+        middle.setPadding(new Insets(10));
+
+
 
         //Add all panes to borderPane and set style properties of borderPane
         borderPane.setTop(topHBox);
         borderPane.setRight(ruleVBox);
         borderPane.setLeft(menuVBox);
-        borderPane.setCenter(gridPane);
+        borderPane.setCenter(middle);
         borderPane.setBottom(bottomHBox);
         borderPane.setStyle("-fx-background-color:#1f2833;");
 
         //Create Scene and setScene
-        scene = new Scene(borderPane,1300,1000);
+        scene = new Scene(borderPane,1350,1050);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Othello");
         primaryStage.show();
@@ -187,6 +215,7 @@ public class Othello extends Application {
         gridPane.setMaxWidth(600);
         gridPane.setMinWidth(600);
         gridPane.setStyle("-fx-border-color:#0A3A2A;"+"-fx-border-width:4px;");//Give GridPane a border and color it
+
     }
     //Method will use game class to get tiles and construct tilePanes, and add to gridPane
     public GridPane drawBoard(){
