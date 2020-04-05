@@ -15,7 +15,7 @@ public class TilePane extends HBox{
     public int row,col;
     private int control;
     private boolean isValid;
-    private Color red = Color.web("#429E9D");
+    private Color mediumBlue = Color.web("#429E9D");
     /**
      Sole Constructor that writes text and displays unselected Tile HBoxes
      @param s is a tile object from which the tilepane will be contructed from
@@ -61,7 +61,7 @@ public class TilePane extends HBox{
         //Update circle color
         if(s.getUser()==0){
             //Color will be changed later
-            piece.setFill(red);
+            piece.setFill(mediumBlue);
         }
         else if(s.getUser()==1){
             piece.setFill(Color.BLACK);
@@ -105,6 +105,12 @@ public class TilePane extends HBox{
     public int getControl()
     {
         return control;
+    }
+    /**
+     * Method to change color of circle
+     */
+    public void changePieceColor(Color c){
+        this.piece.setFill(c);
     }
 
 

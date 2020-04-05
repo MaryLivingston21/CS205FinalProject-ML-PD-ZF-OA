@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import javafx.scene.Scene;
@@ -9,11 +10,6 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 
 import javafx.geometry.Pos;
@@ -52,7 +48,20 @@ public class Othello extends Application {
     VBox ruleVBox = new VBox();//will contain rules
     Button newGameButton, passTurnButton,exitButton;//buttons
     Pane menuPane, rulePane; //panes to hold text
-
+    /**
+     * Color and Background Declarations. Feel free to change if you want a different aesthetic
+     */
+    Color neonLightBlue = Color.rgb(102,252,241);
+    Background neonLightBlueBackground = new Background(new BackgroundFill(Color.web("#66fcf1"), CornerRadii.EMPTY, Insets.EMPTY));
+    Background darkBlueBackground = new Background(new BackgroundFill(Color.web("#1f2833"), CornerRadii.EMPTY, Insets.EMPTY));
+    Background pastelRedBackground = new Background(new BackgroundFill(Color.web("#FF9AA2"), CornerRadii.EMPTY, Insets.EMPTY));
+    Background pastelDarkRedBackground = new Background(new BackgroundFill(Color.web("#FF3A49"), CornerRadii.EMPTY, Insets.EMPTY));
+    Background mediumBlueBackground = new Background(new BackgroundFill(Color.web("#429E9D"), CornerRadii.EMPTY, Insets.EMPTY));
+    Background darkGreenBackground = new Background(new BackgroundFill(Color.web("#0A3A2A"), CornerRadii.EMPTY, Insets.EMPTY));
+    Border neonLightBlueBorder = new Border(new BorderStroke(neonLightBlue,
+            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+    Border darkGreenBorder = new Border(new BorderStroke(Color.web("#0A3A2A"),
+            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
     @Override
     public void start(Stage primaryStage){
         b = new Board();
@@ -70,25 +79,43 @@ public class Othello extends Application {
          *
          */
         newGameButton = new Button("New Game");
-        newGameButton.setStyle("-fx-background-color:#66fcf1;");
+        newGameButton.setBackground(neonLightBlueBackground);
+        newGameButton.setOnMouseEntered(this::mouseEnterButton);
+        newGameButton.setOnMouseExited(this::mouseExitButton);
+        newGameButton.setOnMouseReleased(this::mouseReleasedButton);
+        newGameButton.setOnMousePressed(this::mousePressedButton);
         newGameButton.setOnAction(event->
         {
             //TODO::Add fucntionality
+            newGameButton.setBackground(pastelDarkRedBackground);
+
         });
         passTurnButton = new Button("Pass Turn");
-        passTurnButton.setStyle("-fx-background-color:#66fcf1;");
+        passTurnButton.setBackground(neonLightBlueBackground);
+        passTurnButton.setOnMouseEntered(this::mouseEnterButton);
+        passTurnButton.setOnMouseExited(this::mouseExitButton);
+        passTurnButton.setOnMouseReleased(this::mouseReleasedButton);
+        passTurnButton.setOnMousePressed(this::mousePressedButton);
         passTurnButton.setOnAction(event->
         {
+            passTurnButton.setBackground(pastelDarkRedBackground);
             //TODO::ADD functionality
         });
 
         exitButton = new Button("Exit Program");
-        exitButton.setStyle("-fx-background-color:#66fcf1;");
+        exitButton.setBackground(neonLightBlueBackground);
+        exitButton.setOnMouseEntered(this::mouseEnterButton);
+        exitButton.setOnMouseExited(this::mouseExitButton);
+        exitButton.setOnMouseReleased(this::mouseReleasedButton);
+        exitButton.setOnMousePressed(this::mousePressedButton);
         exitButton.setOnAction(event ->
         {
+            newGameButton.setBackground(pastelDarkRedBackground);
             Platform.exit();
 
         });
+
+
 
         /**
          *
@@ -100,10 +127,10 @@ public class Othello extends Application {
         Circle bCircle = new Circle(30, Color.BLACK);
         Text p1Points = new Text("2 Pieces");//TODO::Construct a function to update these values
         p1Points.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        p1Points.setFill(Color.rgb(102,252,241));
+        p1Points.setFill(neonLightBlue);
         Text p2Points = new Text("2 Pieces");
         p2Points.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        p2Points.setFill(Color.rgb(102,252,241));
+        p2Points.setFill(neonLightBlue);
         p1PointsVBox.getChildren().addAll(bCircle,p1Points);//Add circles and texts to VBoxes
         p2PointsVBox.getChildren().addAll(wCircle,p2Points);
         p1PointsVBox.setAlignment(Pos.CENTER_LEFT);//set position in box
@@ -114,7 +141,7 @@ public class Othello extends Application {
         //Construct titleVBox and title text -> will be contained in topHBox
         Text titleText = new Text("Othello");
         titleText.setFont(Font.font("Arial", FontWeight.BOLD, 40));
-        titleText.setFill(Color.rgb(102,252,241));
+        titleText.setFill(neonLightBlue);
         titleVBox.setMinHeight(20);
         titleVBox.setMaxHeight(20);
         titleVBox.setAlignment(Pos.CENTER);
@@ -122,7 +149,7 @@ public class Othello extends Application {
 
         //Construct topHBox -> contains points and title
         //TODO:: Add Points functionality and whose turn fucntionality
-        topHBox.setStyle("-fx-background-color:#1f2833;");
+        topHBox.setBackground(darkBlueBackground);
         topHBox.setStyle("fx-border-width:2px;"+ "-fx-border-color:#45a29e;");
         topHBox.setMinHeight(150);
         topHBox.setMaxHeight(150);
@@ -133,7 +160,7 @@ public class Othello extends Application {
         //TODO:: Addd new game and timer
         bottomHBox.setPadding(new Insets(20));
         bottomHBox.setSpacing(15);
-        bottomHBox.setStyle("-fx-background-color:#1f2833;");
+        bottomHBox.setBackground(darkBlueBackground);
         bottomHBox.setStyle("fx-border-width:2px;"+ "-fx-border-color:#45a29e;");
         bottomHBox.setMinHeight(150);
         bottomHBox.setMaxHeight(150);
@@ -143,7 +170,7 @@ public class Othello extends Application {
         //Construct menuVBox -> will hold the menu of options
         Text menuText = new Text("Menu");
         menuText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        menuText.setFill(Color.rgb(102,252,241));
+        menuText.setFill(neonLightBlue);
         menuPane = new Pane(menuText);
         menuVBox.getChildren().add(menuText);
         menuVBox.setPadding(new Insets(20,100,20,100));
@@ -159,7 +186,7 @@ public class Othello extends Application {
                 "your opponents pieces\n in a move that\n that would sandwich\n one or more of \n their pieces\n\n-The game ends when\n no more valid\n" +
                 " moves exist\n\n   Good Luck!");
         ruleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        ruleText.setFill(Color.rgb(102,252,241));
+        ruleText.setFill(neonLightBlue);
         rulePane = new Pane(ruleText);
         ruleVBox.getChildren().add(ruleText);
         ruleVBox.setPadding(new Insets(20,50,20,50));
@@ -173,7 +200,7 @@ public class Othello extends Application {
 
         //Construct messageVBox and message text. Message text will be updated through out game
         Text messageText = new Text("Messages");
-        messageText.setFill(Color.rgb(102,252,241));
+        messageText.setFill(neonLightBlue);
         messageText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
         messageVBox.setMaxHeight(50);
@@ -194,7 +221,7 @@ public class Othello extends Application {
         borderPane.setLeft(menuVBox);
         borderPane.setCenter(middle);
         borderPane.setBottom(bottomHBox);
-        borderPane.setStyle("-fx-background-color:#1f2833;");
+        borderPane.setBackground(darkBlueBackground);
 
         //Create Scene and setScene
         scene = new Scene(borderPane,1350,1050);
@@ -206,6 +233,35 @@ public class Othello extends Application {
     public void handleClick(MouseEvent e) {
 
     }
+    public void mouseEnterButton(MouseEvent e){
+        Button b = (Button)e.getSource();
+        b.setBackground(pastelRedBackground);
+    }
+    public void mouseExitButton(MouseEvent e){
+        Button b = (Button)e.getSource();
+        b.setBackground(neonLightBlueBackground);
+    }
+    public void mousePressedButton(MouseEvent e){
+        Button b = (Button)e.getSource();
+        b.setBackground(pastelDarkRedBackground);
+    }
+    public void mouseReleasedButton(MouseEvent e){
+        Button b = (Button)e.getSource();
+        b.setBackground(pastelRedBackground);
+    }
+    public void mouseEnter(MouseEvent e){
+        Color playerColor = Color.BLACK;
+        TilePane tp=(TilePane)e.getSource();
+        tp.changePieceColor(playerColor);
+        tp.setBorder(neonLightBlueBorder);
+
+    }
+    public void mouseExit(MouseEvent e) {
+        Color playerColor = Color.BLACK;
+        TilePane tp = (TilePane) e.getSource();
+        tp.setPlayerControl(tp.getControl());
+        tp.setBorder(darkGreenBorder);
+    }
     //Method will call drawBoard and set style of properties of gridPane
     public void setGridPane()
     {
@@ -214,7 +270,7 @@ public class Othello extends Application {
         gridPane.setMinHeight(600);
         gridPane.setMaxWidth(600);
         gridPane.setMinWidth(600);
-        gridPane.setStyle("-fx-border-color:#0A3A2A;"+"-fx-border-width:4px;");//Give GridPane a border and color it
+        gridPane.setStyle("-fx-border-color:#0A3A2A;"+"-fx-border-width:6px;");//Give GridPane a border and color it
 
     }
     //Method will use game class to get tiles and construct tilePanes, and add to gridPane
@@ -229,6 +285,8 @@ public class Othello extends Application {
                 s=g.getSquare(r,c);//get Tile object from game(which gets it from board)
                 tp=new TilePane(s);
                 tp.setOnMouseClicked(this::handleClick);
+                tp.setOnMouseEntered(this::mouseEnter);
+                tp.setOnMouseExited(this::mouseExit);
                 gp.add(tp,c,r);
             }
         }
