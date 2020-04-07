@@ -208,17 +208,16 @@ public class Board {
         }
         return board;
     }
-    public Square getSquare(int r, int c)
-    {
-        if((r<9)&&(c<9)){
+
+    public Square getSquare(int r, int c) {
+        if((r<9) && (c<9) && (r>0) && (c>0)){
             for(int i=0; i<boardOfSquares.size();i++){
                 if(boardOfSquares.get(i).getCol()==c &&boardOfSquares.get(i).getRow()==r){
                     return boardOfSquares.get(i);
                 }
             }
         }
-        Square s =null;
-        return s;
+        return null;
     }
 
     //TODO:: Does this need an overridden equals method?

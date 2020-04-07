@@ -4,12 +4,12 @@ import java.util.*;
 import java.util.ArrayList;
 
 public class Game {
-    private Board gameBoard;
+    private static Board gameBoard;
     private ArrayList<Player> players;
     private Player whoseTurn;
 
     public Game(Board board, ArrayList<Player> players){
-        this.gameBoard = board;
+        gameBoard = board;
         this.players = players;
         whoseTurn = players.get(0);
     }
@@ -25,6 +25,7 @@ public class Game {
             otherP = players.get(0);
         }
         boolean isValidMove = isValidMove(currP, s);
+        //TODO ensure user has Valid moves???
         Square s1 = s;
         Square s2 = getSandwichEnd(s);
         if (s1.getCol() != -1){
@@ -75,11 +76,28 @@ public class Game {
 
 
     public static ArrayList<ArrayList<Square>> getValidMoves(Player p){
-        //TODO:  return all valid moves for player p ex: ((1,2),(3,5),(6,1))
-        //validMovesd.get(i).get(0) returns empty square user can play on
-        // validMoves.get(i).get(1) returns sandwich end square
-        ArrayList<Square> s = new ArrayList<Square>(Arrays.asList(new Square(-1,-1)));
-        return new ArrayList<ArrayList<Square>>(Arrays.asList(s,s));
+        ArrayList<ArrayList<Square>> possibleMoves = new ArrayList<ArrayList<Square>>();
+        ArrayList<Square> currentBoard = gameBoard.getBoard();
+            for (int i=0; i<currentBoard.size(); i++){
+                // if square is not occupied
+                if (currentBoard.get(i).getUser() == 0){
+                    Square s = currentBoard.get(i);
+                    int row = s.getRow();
+                    int col = s.getCol();
+                    int oRow = row;
+                    int oCol = col;
+                    // horizontals
+
+                    // verticals
+
+
+                    // diagonals
+
+                }
+
+            }
+
+        return possibleMoves;
     }
 
     public Player getCurrentPlayer(){
