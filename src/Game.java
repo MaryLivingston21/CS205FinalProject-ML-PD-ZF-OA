@@ -54,7 +54,7 @@ public class Game {
         }
     }
 
-    public static Move isValidMove(Player p, Square s){
+    public Move isValidMove(Player p, Square s){
         ArrayList<Move> validMoves  = getValidMoves(p);
         assert validMoves != null;
         for (Move m : validMoves) {
@@ -65,22 +65,23 @@ public class Game {
         return null;
     }
 
-    public static ArrayList<Move> getValidMoves(Player p){
+    public ArrayList<Move> getValidMoves(Player p){
+        //TODO: eventually make this method smaller and more efficient
         ArrayList<Move> possibleMoves = new ArrayList<Move>();
         int playerNum = p.getPlayerNumber();
-        int numFlipped = 0;
         ArrayList<Square> currentBoard = gameBoard.getBoard();
             for (int i=0; i<currentBoard.size(); i++){
+                int numFlipped = 0;
                 // if square is not occupied
                 if (currentBoard.get(i).getUser() == 0){
                     Square s = currentBoard.get(i);
                     int row = s.getRow();
                     int col = s.getCol();
-                    // check right horizontal
-                    for (int j=row; j < 9 ; j++){
+                    // check down vertical
+                    for (int j=row+1; j < 9 ; j++){
                         if (getSquare(j,col).getUser() == 0){
                             // if square has not been played on
-                            break;
+                            j = 9; // <- break;
                         } else if (getSquare(j,col).getUser() != playerNum) {
                             // if belongs to other user, add to flipped count
                             numFlipped ++;
@@ -97,14 +98,14 @@ public class Game {
                             possibleMoves.add(m);
                         } else {
                             // if belongs to current user && no squares flipped
-                            break;
+                            j = 9; //-->break
                         }
                     }
-                    // check left horizontal
-                    for (int j=row; j > 0 ; j--){
+                    // check up vertical
+                    for (int j=row-1; j > 0 ; j--){
                         if (getSquare(j,col).getUser() == 0){
                             // if square has not been played on
-                            break;
+                            j = 0; // -->break
                         } else if (getSquare(j,col).getUser() != playerNum) {
                             // if belongs to other user, add to flipped count
                             numFlipped ++;
@@ -121,13 +122,14 @@ public class Game {
                             possibleMoves.add(m);
                         } else {
                             // if belongs to current user && no squares flipped
-                            break;
+                            j=0; // --> break
                         }
                     }
-                    // check down vertical
-                    for (int j=col; j > 0 ; j--){
+                    // check right horizontal
+                    for (int j=col-1; j > 0 ; j--){
                         if (getSquare(row,j).getUser() == 0){
                             // if square has not been played on
+                            j = 0;
                             break;
                         } else if (getSquare(row,j).getUser() != playerNum) {
                             // if belongs to other user, add to flipped count
@@ -148,11 +150,11 @@ public class Game {
                             break;
                         }
                     }
-                    // check up vertical
-                    for (int j=col; j < 9 ; j++){
+                    // check left horixontal
+                    for (int j=col+1; j < 9 ; j++){
                         if (getSquare(row,j).getUser() == 0){
                             // if square has not been played on
-                            break;
+                            j = 9; // --> break
                         } else if (getSquare(row,j).getUser() != playerNum) {
                             // if belongs to other user, add to flipped count
                             numFlipped ++;
@@ -169,7 +171,7 @@ public class Game {
                             possibleMoves.add(m);
                         } else {
                             // if belongs to current user && no squares flipped
-                            break;
+                           j = 9; // --> break
                         }
                     }
 

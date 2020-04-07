@@ -27,7 +27,7 @@ public class Move {
 
     @Override
     public String toString(){
-        return sPlaced + "numFlipped = " + numFlipped;
+        return sPlaced + " numFlipped = " + numFlipped;
     }
 
     // Only checks if piece placed is equal

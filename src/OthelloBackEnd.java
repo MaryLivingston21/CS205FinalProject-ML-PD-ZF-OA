@@ -45,6 +45,11 @@ public class OthelloBackEnd {
         //Tell the user it's their turn
         System.out.println("Player "+p.getPlayerNumber()+", it\'s your turn!");
 
+        ArrayList<Move> allMoves = g.getValidMoves(p);
+        for (Move move : allMoves){
+            System.out.println(move);
+        }
+
         //ask if the user would like to take a turn
         System.out.print("Take a turn (y/n)? ");
         Scanner s = new Scanner(System.in);
