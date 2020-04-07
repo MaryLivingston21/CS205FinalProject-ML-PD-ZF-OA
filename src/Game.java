@@ -24,14 +24,14 @@ public class Game {
             currP = players.get(1);
             otherP = players.get(0);
         }
-        boolean isValidMove = isValidMove(currP, s);
-        //TODO ensure user has Valid moves???
-        Square s1 = s;
-        Square s2 = getSandwichEnd(s);
-        if (s1.getCol() != -1){
-            int points = gameBoard.adjustBoard(currP,s1,s2);
-            currP.adjustScore(points + 1);
-            otherP.adjustScore(points * -1);
+        if (isValidMove(currP, s) != null){
+            Move m = isValidMove(currP, s);
+            Square s1 = m.getSquarePlaced();
+            Square s2 = m.getEndSquare();
+            int sqauresFlipped = m.getNumFlipped();
+            gameBoard.adjustBoard(currP,s1,s2);
+            currP.adjustScore(sqauresFlipped + 1);
+            otherP.adjustScore(sqauresFlipped * -1);
             whoseTurn = otherP;
             return true;
         } else {
@@ -54,29 +54,19 @@ public class Game {
         }
     }
 
-    public static boolean isValidMove(Player p, Square s){
-        ArrayList<ArrayList<Square>> validMoves  = getValidMoves(p);
+    public static Move isValidMove(Player p, Square s){
+        ArrayList<Move> validMoves  = getValidMoves(p);
         assert validMoves != null;
-        for (ArrayList<Square> validMove : validMoves) {
-            if (s == validMove.get(0)) {
-                return true;
+        for (Move m : validMoves) {
+            if (s == m.getSquarePlaced()) {
+                return m;
             }
         }
-        return false;
-
-        // NOTES:
-        // validMoves.get(i).get(0) returns empty square user can play on
-        // validMoves.get(i).get(1) returns sandwich end square
+        return null;
     }
 
-    public static Square getSandwichEnd(Square squarePlayedOn){
-        //TODO: THIS --> MARY
-        return new Square(-1,-1);
-    }
-
-
-    public static ArrayList<ArrayList<Square>> getValidMoves(Player p){
-        ArrayList<ArrayList<Square>> possibleMoves = new ArrayList<ArrayList<Square>>();
+    public static ArrayList<Move> getValidMoves(Player p){
+        ArrayList<Move> possibleMoves = new ArrayList<Move>();
         int playerNum = p.getPlayerNumber();
         int numFlipped = 0;
         ArrayList<Square> currentBoard = gameBoard.getBoard();
@@ -86,15 +76,42 @@ public class Game {
                     Square s = currentBoard.get(i);
                     int row = s.getRow();
                     int col = s.getCol();
-                    int oRow = row;
-                    int oCol = col;
-                    // horizontals
-                    for (int j=oRow; j < 9 ; j++){
+                    // check right horizontal
+                    for (int j=row; j < 9 ; j++){
                         if (getSquare(j,col).getUser() == 0){
+                            // if square has not been played on
                             break;
                         } else if (getSquare(j,col).getUser() != playerNum) {
                             // if belongs to other user, add to flipped count
                             numFlipped ++;
+                        } else if (numFlipped > 0){
+                            // if belongs to current user && 1+ squares are flipped
+                            Move m = new Move(s, getSquare(j,col), numFlipped);
+                            if (!possibleMoves.contains(m)){
+                                possibleMoves.add(m);
+                            }
+                        } else {
+                            // if belongs to current user && no squares flipped
+                            break;
+                        }
+                    }
+                    // check left horizontal
+                    for (int j=row; j > 0 ; j--){
+                        if (getSquare(j,col).getUser() == 0){
+                            // if square has not been played on
+                            break;
+                        } else if (getSquare(j,col).getUser() != playerNum) {
+                            // if belongs to other user, add to flipped count
+                            numFlipped ++;
+                        } else if (numFlipped > 0){
+                            // if belongs to current user && 1+ squares are flipped
+                            Move m = new Move(s, getSquare(j,col), numFlipped);
+                            if (!possibleMoves.contains(m)){
+                                possibleMoves.add(m);
+                            }
+                        } else {
+                            // if belongs to current user && no squares flipped
+                            break;
                         }
                     }
                     // verticals
