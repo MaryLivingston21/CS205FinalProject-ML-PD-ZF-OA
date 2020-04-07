@@ -77,6 +77,8 @@ public class Game {
 
     public static ArrayList<ArrayList<Square>> getValidMoves(Player p){
         ArrayList<ArrayList<Square>> possibleMoves = new ArrayList<ArrayList<Square>>();
+        int playerNum = p.getPlayerNumber();
+        int numFlipped = 0;
         ArrayList<Square> currentBoard = gameBoard.getBoard();
             for (int i=0; i<currentBoard.size(); i++){
                 // if square is not occupied
@@ -87,7 +89,14 @@ public class Game {
                     int oRow = row;
                     int oCol = col;
                     // horizontals
-
+                    for (int j=oRow; j < 9 ; j++){
+                        if (getSquare(j,col).getUser() == 0){
+                            break;
+                        } else if (getSquare(j,col).getUser() != playerNum) {
+                            // if belongs to other user, add to flipped count
+                            numFlipped ++;
+                        }
+                    }
                     // verticals
 
 
@@ -108,7 +117,7 @@ public class Game {
         return p.getScore();
     }
 
-    public Square getSquare(int r, int c)
+    public static Square getSquare(int r, int c)
     {
 
         return gameBoard.getSquare(r,c);

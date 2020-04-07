@@ -42,4 +42,9 @@ public class Square {
         }
     }
 
+    @Override
+    public String toString(){
+        return "Square " + this.row + ", " + this.col;
+    }
+
 }
