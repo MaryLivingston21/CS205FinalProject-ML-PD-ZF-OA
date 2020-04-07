@@ -48,6 +48,7 @@ public class Othello extends Application {
     VBox ruleVBox = new VBox();//will contain rules
     Button newGameButton, passTurnButton,exitButton;//buttons
     Pane menuPane, rulePane; //panes to hold text
+    Text messageText;
     /**
      * Color and Background Declarations. Feel free to change if you want a different aesthetic
      */
@@ -157,7 +158,7 @@ public class Othello extends Application {
         topHBox.getChildren().addAll(p1PointsVBox,titleVBox,p2PointsVBox);
 
         //Construct bottomHBox -> contains buttons and timer(when I add it)
-        //TODO:: Addd new game and timer
+        //TODO:: Add new game and timer
         bottomHBox.setPadding(new Insets(20));
         bottomHBox.setSpacing(15);
         bottomHBox.setBackground(darkBlueBackground);
@@ -199,7 +200,7 @@ public class Othello extends Application {
         setGridPane();
 
         //Construct messageVBox and message text. Message text will be updated through out game
-        Text messageText = new Text("Messages");
+        messageText = new Text("Messages");
         messageText.setFill(neonLightBlue);
         messageText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
@@ -231,7 +232,9 @@ public class Othello extends Application {
     }
 
     public void handleClick(MouseEvent e) {
-
+        TilePane tp = (TilePane) e.getSource();
+        messageText.setText("Selected Tile - Row: " + tp.getRow() + " Col: " + tp.getCol());
+        //TODO::This is where game logic should go I think
     }
     public void mouseEnterButton(MouseEvent e){
         Button b = (Button)e.getSource();
