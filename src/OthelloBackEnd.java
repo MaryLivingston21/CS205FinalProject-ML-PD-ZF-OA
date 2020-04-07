@@ -7,6 +7,7 @@ public class OthelloBackEnd {
     public static void main(String[] args){
         // Get user input for number of users
         int numPlayers = newGame();
+        String gameType;
 
         // Initialize a new Board
         Board board = new Board();
@@ -16,9 +17,11 @@ public class OthelloBackEnd {
         Player opponent;
         if (numPlayers == 1){
             opponent = new Player(2, "computer");
+            gameType = "withComp";
         }
         else{
             opponent = new Player(2, "human");
+            gameType = "Humans";
         }
 
         // create ArrayList of players
@@ -28,8 +31,9 @@ public class OthelloBackEnd {
         Game g = new Game(board, players);
 
         //right now set to run for 100 turns for testing purposes
+        //TODO: 64 squares, game ends when all full, needs to account for passed turns
         for (int i = 0; i < 100; i++){
-            playerMenu(g, g.getCurrentPlayer());
+            playerMenu(g, g.getCurrentPlayer(), gameType);
             System.out.println("\r\n\r\n\r\n");
             System.out.print(board);
             System.out.println("\r\n\r\n\r\n");
@@ -39,11 +43,24 @@ public class OthelloBackEnd {
     }
 
     //test
-    public static void playerMenu(Game g, Player p){
+    public static void playerMenu(Game g, Player p, String gameType){
 
+        if (gameType == "withComp"){
+            if (p.getPlayerNumber() == 2){
+                g.computerPlayPiece();
+            } else {
+                userTakeTurn(g,p);
+            }
+        } else {
+            userTakeTurn(g,p);
+        }
+    }
 
+    public static void userTakeTurn(Game g, Player p){
         //Tell the user it's their turn
         System.out.println("Player "+p.getPlayerNumber()+", it\'s your turn!");
+
+        //Display Possible Moves
         System.out.println("Possible Moves:");
         ArrayList<Move> allMoves = g.getValidMoves(p);
         for (Move move : allMoves){
@@ -79,6 +96,8 @@ public class OthelloBackEnd {
             g.passTurn();
         }
     }
+
+
     public static int newGame(){
         // Prompt user and get input
         System.out.println("Type 1 to play against the computer, or 2 to play against a human: ");

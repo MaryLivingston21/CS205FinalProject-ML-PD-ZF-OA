@@ -14,6 +14,29 @@ public class Game {
         whoseTurn = players.get(0);
     }
 
+    public boolean computerPlayPiece(){
+        Player currP = players.get(1);
+        Player otherP = players.get(0);
+        ArrayList<Move> moves = getValidMoves(currP);
+        if (moves.size() > 0) {
+            Random rand = new Random();
+            int num = rand.nextInt(moves.size());
+            Move m = moves.get(num);
+            Square s1 = m.getSquarePlaced();
+            Square s2 = m.getEndSquare();
+            int squaresFlipped = m.getNumFlipped();
+            gameBoard.adjustBoard(currP, s1, s2);
+            currP.adjustScore(squaresFlipped + 1);
+            otherP.adjustScore(squaresFlipped * -1);
+            whoseTurn = otherP;
+            return true;
+        } else{
+            // if no moves
+            return false;
+        }
+
+    }
+
     public boolean playPiece(Square s){
         Player currP;
         Player otherP;
