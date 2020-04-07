@@ -87,9 +87,14 @@ public class Game {
                         } else if (numFlipped > 0){
                             // if belongs to current user && 1+ squares are flipped
                             Move m = new Move(s, getSquare(j,col), numFlipped);
-                            if (!possibleMoves.contains(m)){
-                                possibleMoves.add(m);
+                            for (Move m2 : possibleMoves){
+                                // if move already in
+                                if (m2.equals(m)){
+                                    m.setNumFlipped(numFlipped + m2.getNumFlipped());
+                                    possibleMoves.remove(m2);
+                                }
                             }
+                            possibleMoves.add(m);
                         } else {
                             // if belongs to current user && no squares flipped
                             break;
@@ -105,17 +110,68 @@ public class Game {
                             numFlipped ++;
                         } else if (numFlipped > 0){
                             // if belongs to current user && 1+ squares are flipped
-                            Move m = new Move(s, getSquare(j,col), numFlipped);
-                            if (!possibleMoves.contains(m)){
-                                possibleMoves.add(m);
+                            Move m = new Move(s, getSquare(j, col), numFlipped);
+                            for (Move m2 : possibleMoves){
+                                // if move already in
+                                if (m2.equals(m)){
+                                    m.setNumFlipped(numFlipped + m2.getNumFlipped());
+                                    possibleMoves.remove(m2);
+                                }
                             }
+                            possibleMoves.add(m);
                         } else {
                             // if belongs to current user && no squares flipped
                             break;
                         }
                     }
-                    // verticals
-
+                    // check down vertical
+                    for (int j=col; j > 0 ; j--){
+                        if (getSquare(row,j).getUser() == 0){
+                            // if square has not been played on
+                            break;
+                        } else if (getSquare(row,j).getUser() != playerNum) {
+                            // if belongs to other user, add to flipped count
+                            numFlipped ++;
+                        } else if (numFlipped > 0){
+                            // if belongs to current user && 1+ squares are flipped
+                            Move m = new Move(s, getSquare(row,j), numFlipped);
+                            for (Move m2 : possibleMoves){
+                                // if move already in
+                                if (m2.equals(m)){
+                                    m.setNumFlipped(numFlipped + m2.getNumFlipped());
+                                    possibleMoves.remove(m2);
+                                }
+                            }
+                            possibleMoves.add(m);
+                        } else {
+                            // if belongs to current user && no squares flipped
+                            break;
+                        }
+                    }
+                    // check up vertical
+                    for (int j=col; j < 9 ; j++){
+                        if (getSquare(row,j).getUser() == 0){
+                            // if square has not been played on
+                            break;
+                        } else if (getSquare(row,j).getUser() != playerNum) {
+                            // if belongs to other user, add to flipped count
+                            numFlipped ++;
+                        } else if (numFlipped > 0){
+                            // if belongs to current user && 1+ squares are flipped
+                            Move m = new Move(s, getSquare(row,j), numFlipped);
+                            for (Move m2 : possibleMoves){
+                                // if move already in
+                                if (m2.equals(m)){
+                                    m.setNumFlipped(numFlipped + m2.getNumFlipped());
+                                    possibleMoves.remove(m2);
+                                }
+                            }
+                            possibleMoves.add(m);
+                        } else {
+                            // if belongs to current user && no squares flipped
+                            break;
+                        }
+                    }
 
                     // diagonals
 
