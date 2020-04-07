@@ -73,26 +73,25 @@ public class Game {
             for (int i=0; i<currentBoard.size(); i++){
                 int numFlipped = 0;
                 // if square is not occupied
-                if (currentBoard.get(i).getUser() == 0){
+                if (currentBoard.get(i).getUser() == 0) {
                     Square s = currentBoard.get(i);
                     int row = s.getRow();
                     int col = s.getCol();
                     // check down vertical
-                    for (int j=row+1; j < 9 ; j++){
-                        if (getSquare(j,col).getUser() == 0){
+                    for (int j = row + 1; j < 9; j++) {
+                        if (getSquare(j, col).getUser() == 0) {
                             // if square has not been played on
                             j = 9; // <- break;
-                        } else if (getSquare(j,col).getUser() != playerNum) {
+                        } else if (getSquare(j, col).getUser() != playerNum) {
                             // if belongs to other user, add to flipped count
-                            numFlipped ++;
-                        } else if (numFlipped > 0){
+                            numFlipped++;
+                        } else if (numFlipped > 0) {
                             // if belongs to current user && 1+ squares are flipped
-                            Move m = new Move(s, getSquare(j,col), numFlipped);
-                            for (Move m2 : possibleMoves){
-                                // if move already in
-                                if (m2.equals(m)){
-                                    m.setNumFlipped(numFlipped + m2.getNumFlipped());
-                                    possibleMoves.remove(m2);
+                            Move m = new Move(s, getSquare(j, col), numFlipped);
+                            for (int z = 0; z<possibleMoves.size(); z++){
+                                if (possibleMoves.get(z).equals(m)){
+                                    m.setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
+                                    possibleMoves.remove(z);
                                 }
                             }
                             possibleMoves.add(m);
@@ -102,46 +101,44 @@ public class Game {
                         }
                     }
                     // check up vertical
-                    for (int j=row-1; j > 0 ; j--){
-                        if (getSquare(j,col).getUser() == 0){
+                    for (int j = row - 1; j > 0; j--) {
+                        if (getSquare(j, col).getUser() == 0) {
                             // if square has not been played on
                             j = 0; // -->break
-                        } else if (getSquare(j,col).getUser() != playerNum) {
+                        } else if (getSquare(j, col).getUser() != playerNum) {
                             // if belongs to other user, add to flipped count
-                            numFlipped ++;
-                        } else if (numFlipped > 0){
+                            numFlipped++;
+                        } else if (numFlipped > 0) {
                             // if belongs to current user && 1+ squares are flipped
                             Move m = new Move(s, getSquare(j, col), numFlipped);
-                            for (Move m2 : possibleMoves){
-                                // if move already in
-                                if (m2.equals(m)){
-                                    m.setNumFlipped(numFlipped + m2.getNumFlipped());
-                                    possibleMoves.remove(m2);
+                            for (int z = 0; z<possibleMoves.size(); z++){
+                                if (possibleMoves.get(z).equals(m)){
+                                    m.setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
+                                    possibleMoves.remove(z);
                                 }
                             }
                             possibleMoves.add(m);
                         } else {
                             // if belongs to current user && no squares flipped
-                            j=0; // --> break
+                            j = 0; // --> break
                         }
                     }
                     // check right horizontal
-                    for (int j=col-1; j > 0 ; j--){
-                        if (getSquare(row,j).getUser() == 0){
+                    for (int j = col - 1; j > 0; j--) {
+                        if (getSquare(row, j).getUser() == 0) {
                             // if square has not been played on
                             j = 0;
                             break;
-                        } else if (getSquare(row,j).getUser() != playerNum) {
+                        } else if (getSquare(row, j).getUser() != playerNum) {
                             // if belongs to other user, add to flipped count
-                            numFlipped ++;
-                        } else if (numFlipped > 0){
+                            numFlipped++;
+                        } else if (numFlipped > 0) {
                             // if belongs to current user && 1+ squares are flipped
-                            Move m = new Move(s, getSquare(row,j), numFlipped);
-                            for (Move m2 : possibleMoves){
-                                // if move already in
-                                if (m2.equals(m)){
-                                    m.setNumFlipped(numFlipped + m2.getNumFlipped());
-                                    possibleMoves.remove(m2);
+                            Move m = new Move(s, getSquare(j, col), numFlipped);
+                            for (int z = 0; z<possibleMoves.size(); z++){
+                                if (possibleMoves.get(z).equals(m)){
+                                    m.setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
+                                    possibleMoves.remove(z);
                                 }
                             }
                             possibleMoves.add(m);
@@ -150,35 +147,139 @@ public class Game {
                             break;
                         }
                     }
-                    // check left horixontal
-                    for (int j=col+1; j < 9 ; j++){
-                        if (getSquare(row,j).getUser() == 0){
+                    // check left horizontal
+                    for (int j = col + 1; j < 9; j++) {
+                        if (getSquare(row, j).getUser() == 0) {
                             // if square has not been played on
                             j = 9; // --> break
-                        } else if (getSquare(row,j).getUser() != playerNum) {
+                        } else if (getSquare(row, j).getUser() != playerNum) {
                             // if belongs to other user, add to flipped count
-                            numFlipped ++;
-                        } else if (numFlipped > 0){
+                            numFlipped++;
+                        } else if (numFlipped > 0) {
                             // if belongs to current user && 1+ squares are flipped
-                            Move m = new Move(s, getSquare(row,j), numFlipped);
-                            for (Move m2 : possibleMoves){
-                                // if move already in
-                                if (m2.equals(m)){
-                                    m.setNumFlipped(numFlipped + m2.getNumFlipped());
-                                    possibleMoves.remove(m2);
+                            Move m = new Move(s, getSquare(j, col), numFlipped);
+                            for (int z = 0; z<possibleMoves.size(); z++){
+                                if (possibleMoves.get(z).equals(m)){
+                                    m.setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
+                                    possibleMoves.remove(z);
                                 }
                             }
                             possibleMoves.add(m);
                         } else {
                             // if belongs to current user && no squares flipped
-                           j = 9; // --> break
+                            j = 9; // --> break
                         }
                     }
 
-                    // diagonals
-
+                    // bottom right diagonal
+                    int j = col + 1;
+                    int k = row + 1;
+                    while (j < 9 && k < 9) {
+                        if (getSquare(k, j).getUser() == 0) {
+                            // if square has not been played on
+                            j = 9; // --> break
+                        } else if (getSquare(k, j).getUser() != playerNum) {
+                            // if belongs to other user, add to flipped count
+                            numFlipped++;
+                        } else if (numFlipped > 0) {
+                            // if belongs to current user && 1+ squares are flipped
+                            Move m = new Move(s, getSquare(j, col), numFlipped);
+                            for (int z = 0; z<possibleMoves.size(); z++){
+                                if (possibleMoves.get(z).equals(m)){
+                                    m.setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
+                                    possibleMoves.remove(z);
+                                }
+                            }
+                            possibleMoves.add(m);
+                        } else {
+                            // if belongs to current user && no squares flipped
+                            j = 9; // --> break
+                        }
+                        j++;
+                        k++;
+                    }
+                    // bottom left diagonal
+                    j = col + 1;
+                    k = row - 1;
+                    while (j < 9 && k > 0) {
+                        if (getSquare(k, j).getUser() == 0) {
+                            // if square has not been played on
+                            j = 9; // --> break
+                        } else if (getSquare(k, j).getUser() != playerNum) {
+                            // if belongs to other user, add to flipped count
+                            numFlipped++;
+                        } else if (numFlipped > 0) {
+                            // if belongs to current user && 1+ squares are flipped
+                            Move m = new Move(s, getSquare(j, col), numFlipped);
+                            for (int z = 0; z<possibleMoves.size(); z++){
+                                if (possibleMoves.get(z).equals(m)){
+                                    m.setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
+                                    possibleMoves.remove(z);
+                                }
+                            }
+                            possibleMoves.add(m);
+                        } else {
+                            // if belongs to current user && no squares flipped
+                            j = 9; // --> break
+                        }
+                        j++;
+                        k--;
+                    }
+                    // top left diagonal
+                    j = col - 1;
+                    k = row - 1;
+                    while (j > 0 && k > 0) {
+                        if (getSquare(k, j).getUser() == 0) {
+                            // if square has not been played on
+                            j = 0; // --> break
+                        } else if (getSquare(k, j).getUser() != playerNum) {
+                            // if belongs to other user, add to flipped count
+                            numFlipped++;
+                        } else if (numFlipped > 0) {
+                            // if belongs to current user && 1+ squares are flipped
+                            Move m = new Move(s, getSquare(j, col), numFlipped);
+                            for (int z = 0; z<possibleMoves.size(); z++){
+                                if (possibleMoves.get(z).equals(m)){
+                                    m.setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
+                                    possibleMoves.remove(z);
+                                }
+                            }
+                            possibleMoves.add(m);
+                        } else {
+                            // if belongs to current user && no squares flipped
+                            j = 0; // --> break
+                        }
+                        j--;
+                        k--;
+                    }
+                    // top right diagonal
+                    j = col - 1;
+                    k = row + 1;
+                    while (j > 0 && k < 9) {
+                        if (getSquare(k, j).getUser() == 0) {
+                            // if square has not been played on
+                            j = 0; // --> break
+                        } else if (getSquare(k, j).getUser() != playerNum) {
+                            // if belongs to other user, add to flipped count
+                            numFlipped++;
+                        } else if (numFlipped > 0) {
+                            // if belongs to current user && 1+ squares are flipped
+                            Move m = new Move(s, getSquare(j, col), numFlipped);
+                            for (int z = 0; z<possibleMoves.size(); z++){
+                                if (possibleMoves.get(z).equals(m)){
+                                    m.setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
+                                    possibleMoves.remove(z);
+                                }
+                            }
+                            possibleMoves.add(m);
+                        } else {
+                            // if belongs to current user && no squares flipped
+                            j = 0; // --> break
+                        }
+                        j--;
+                        k++;
+                    }
                 }
-
             }
 
         return possibleMoves;

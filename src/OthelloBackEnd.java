@@ -44,7 +44,7 @@ public class OthelloBackEnd {
 
         //Tell the user it's their turn
         System.out.println("Player "+p.getPlayerNumber()+", it\'s your turn!");
-
+        System.out.println("Possible Moves:");
         ArrayList<Move> allMoves = g.getValidMoves(p);
         for (Move move : allMoves){
             System.out.println(move);
