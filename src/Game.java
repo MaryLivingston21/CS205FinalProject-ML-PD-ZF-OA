@@ -78,7 +78,7 @@ public class Game {
     }
 
     /**
-     * Method forfeitTurn passes turn to next player
+     * Method forfeitTurn passes turn to next player if no valid moves
      */
     public boolean forfeitTurn(Player p){
         ArrayList<Move> moves = getValidMoves(p);
