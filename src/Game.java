@@ -77,6 +77,19 @@ public class Game {
         }
     }
 
+    /**
+     * Method forfeitTurn passes turn to next player if no valid moves
+     */
+    public boolean forfeitTurn(Player p){
+        ArrayList<Move> moves = getValidMoves(p);
+        if (moves.isEmpty()){
+            return false;
+        } else{
+            passTurn();
+            return true;
+        }
+    }
+
     public Move isValidMove(Player p, Square s){
         ArrayList<Move> validMoves  = getValidMoves(p);
         assert validMoves != null;
