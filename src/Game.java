@@ -90,6 +90,7 @@ public class Game {
 
     public ArrayList<Move> getValidMoves(Player p){
         //TODO: eventually make this method smaller and more efficient
+        //TODO: account for multi directional flips 
         ArrayList<Move> possibleMoves = new ArrayList<Move>();
         int playerNum = p.getPlayerNumber();
         ArrayList<Square> currentBoard = gameBoard.getBoard();
