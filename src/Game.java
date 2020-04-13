@@ -26,6 +26,7 @@ public class Game {
             Square s2 = m.getEndSquare();
             int squaresFlipped = m.getNumFlipped();
             gameBoard.adjustBoard(currP, s1, s2);
+            //TODO:: adjust for multidirctional flips
             currP.adjustScore(squaresFlipped + 1);
             otherP.adjustScore(squaresFlipped * -1);
             whoseTurn = otherP;
