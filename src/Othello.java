@@ -59,7 +59,7 @@ public class Othello extends Application {
     VBox gameTypeVBox; //VBox to display options for type players at beginning of game
     VBox middle;
     Button newGameButton, passTurnButton,exitButton,gameTypeCompButton,gameTypeHumanButton;//buttons
-    Pane menuPane, rulePane,gameTypePaneHH, gameTypePaneHC; //panes to hold text
+    Pane menuPane, rulePane; //panes to hold text
     Text messageText, p1Points, p2Points,playerMenuText1,titleText,menuText,ruleText,gameTypeDescriptionHH,gameTypeDescriptionHC;
 
     //Circle Objects
@@ -74,6 +74,7 @@ public class Othello extends Application {
 
 
     Color neonLightBlue = Color.rgb(102,252,241);
+    Color darkBlue = Color.web("#1f2833");
     Background neonLightBlueBackground = new Background(new BackgroundFill(Color.web("#66fcf1"), CornerRadii.EMPTY, Insets.EMPTY));
     Background darkBlueBackground = new Background(new BackgroundFill(Color.web("#1f2833"), CornerRadii.EMPTY, Insets.EMPTY));
     Background pastelRedBackground = new Background(new BackgroundFill(Color.web("#FF9AA2"), CornerRadii.EMPTY, Insets.EMPTY));
@@ -279,7 +280,7 @@ public class Othello extends Application {
         ruleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         ruleText.setFill(neonLightBlue);
         rulePane = new Pane(ruleText);
-        ruleVBox.getChildren().add(ruleText);
+        //ruleVBox.getChildren().add(ruleText);
         ruleVBox.setPadding(new Insets(20,50,20,50));
         ruleVBox.setStyle("-fx-border-color:#45a29e; -fx-border-width : 0 2 0 2 ");
         ruleVBox.setMinWidth(300);
@@ -294,28 +295,16 @@ public class Othello extends Application {
          * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
          */
 
-
         //Text
         playerMenuText1 = new Text("Select Game Type");
         playerMenuText1.setFill(neonLightBlue);
         playerMenuText1.setFont(Font.font("Arial", FontWeight.BOLD, 30));
-        gameTypeDescriptionHC = new Text("\n\nHuman vs Computer:\nPlay against a\ncomputer AI\ntrained by Mary");
-        gameTypeDescriptionHH = new Text("Human vs Human:\n\nPlay against\na friend...\nor your self");
+        gameTypeDescriptionHC = new Text("\n\n Human vs Computer: Play against a computer AI trained by Mary");
+        gameTypeDescriptionHH = new Text("Human vs Human: Play against a friend... or your self");
         gameTypeDescriptionHC.setFill(neonLightBlue);
-        gameTypeDescriptionHC.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-        gameTypeDescriptionHC.setTextAlignment(TextAlignment.CENTER);
+        gameTypeDescriptionHC.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
         gameTypeDescriptionHH.setFill(neonLightBlue);
-        gameTypeDescriptionHH.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-        gameTypeDescriptionHH.setTextAlignment(TextAlignment.CENTER);
-        //Panes
-        gameTypePaneHC = new Pane(gameTypeDescriptionHC);
-        gameTypePaneHC.setBackground(pastelDarkRedBackground);
-
-        gameTypePaneHH = new Pane(gameTypeDescriptionHH);
-        gameTypePaneHH.setBackground(pastelDarkRedBackground);
-        gameTypePaneHH.setPadding(new Insets(50,5,5,5));
-
-
+        gameTypeDescriptionHH.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
         //VBox
         gameTypeVBox = new VBox();
         gameTypeVBox.setPadding(new Insets(20,20,20,20));
@@ -325,8 +314,8 @@ public class Othello extends Application {
         gameTypeVBox.setMinHeight(600);
         gameTypeVBox.setMaxWidth(600);
         gameTypeVBox.setMinWidth(600);
-        gameTypeVBox.getChildren().addAll(playerMenuText1, gameTypeCompButton, gameTypeHumanButton);
-        //menuVBox.getChildren().addAll(gameTypePaneHC);
+        gameTypeVBox.getChildren().addAll(playerMenuText1, gameTypeCompButton, gameTypeHumanButton,gameTypeDescriptionHC,gameTypeDescriptionHH);
+
 
 
 
@@ -511,6 +500,10 @@ public class Othello extends Application {
          * Populate BottomVBox with buttons
          */
         bottomHBox.getChildren().addAll(newGameButton,passTurnButton);
+        /**
+         * Populate RulesVBox
+         */
+        ruleVBox.getChildren().add(ruleText);
     }
 
     /**

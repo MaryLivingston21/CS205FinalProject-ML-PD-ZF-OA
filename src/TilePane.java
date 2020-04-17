@@ -16,6 +16,7 @@ public class TilePane extends HBox{
     public int row,col;
     private int control;
     private boolean isValid;
+    // shadedMediumBlue #2d706f   for potential valid moves functionality
     private Color mediumBlue = Color.web("#429E9D");
     Color neonLightBlue = Color.rgb(102,252,241);
     Background neonLightBlueBackground = new Background(new BackgroundFill(Color.web("#66fcf1"), CornerRadii.EMPTY, Insets.EMPTY));
