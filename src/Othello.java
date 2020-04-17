@@ -59,8 +59,8 @@ public class Othello extends Application {
     VBox gameTypeVBox; //VBox to display options for type players at beginning of game
     VBox middle;
     Button newGameButton, passTurnButton,exitButton,gameTypeCompButton,gameTypeHumanButton;//buttons
-    Pane menuPane, rulePane; //panes to hold text
-    Text messageText, p1Points, p2Points,playerMenuText1,titleText,menuText,ruleText;
+    Pane menuPane, rulePane,gameTypePaneHH, gameTypePaneHC; //panes to hold text
+    Text messageText, p1Points, p2Points,playerMenuText1,titleText,menuText,ruleText,gameTypeDescriptionHH,gameTypeDescriptionHC;
 
     //Circle Objects
     Circle wCircle = new Circle(30, Color.WHITE);//Symbols that represent player
@@ -148,7 +148,7 @@ public class Othello extends Application {
             Platform.exit();
 
         });
-        gameTypeCompButton = new Button("1 Human : 1 Computer");
+        gameTypeCompButton = new Button("Human vs. Computer");
         gameTypeCompButton.setBackground(neonLightBlueBackground);
         gameTypeCompButton.setOnMouseEntered(this::mouseEnterButton);
         gameTypeCompButton.setOnMouseExited(this::mouseExitButton);
@@ -156,7 +156,7 @@ public class Othello extends Application {
         gameTypeCompButton.setOnMousePressed(this::mousePressedButton);
 
 
-        gameTypeHumanButton = new Button("2 Human : 0 Computer");
+        gameTypeHumanButton = new Button("  Human vs. Human  ");
         gameTypeHumanButton.setBackground(neonLightBlueBackground);
         gameTypeHumanButton.setOnMouseEntered(this::mouseEnterButton);
         gameTypeHumanButton.setOnMouseExited(this::mouseExitButton);
@@ -232,7 +232,7 @@ public class Othello extends Application {
         bottomHBox.setMinHeight(150);
         bottomHBox.setMaxHeight(150);
         bottomHBox.setAlignment(Pos.CENTER);
-       // bottomHBox.getChildren().addAll(newGameButton,passTurnButton,exitButton);
+        bottomHBox.getChildren().add(exitButton);
 
 
 
@@ -252,7 +252,7 @@ public class Othello extends Application {
         menuText.setFill(neonLightBlue);
         menuPane = new Pane(menuText);
         //menuVBox.getChildren().add(menuText);
-        menuVBox.setPadding(new Insets(20,100,20,100));
+        menuVBox.setPadding(new Insets(20,50,20,50));
         menuVBox.setStyle("-fx-border-color:#45a29e; -fx-border-width : 0 2 0 2 ");
         menuVBox.setMinWidth(300);
         menuVBox.setMaxWidth(300);
@@ -294,19 +294,40 @@ public class Othello extends Application {
          * playerMenu displayed, determinePlayers called, game object initialized
          * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
          */
+
+
         //Text
         playerMenuText1 = new Text("Select Game Type");
         playerMenuText1.setFill(neonLightBlue);
         playerMenuText1.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        gameTypeDescriptionHC = new Text("\n\nHuman vs Computer:\nPlay against a\ncomputer AI\ntrained by Mary");
+        gameTypeDescriptionHH = new Text("Human vs Human:\n\nPlay against\na friend...\nor your self");
+        gameTypeDescriptionHC.setFill(neonLightBlue);
+        gameTypeDescriptionHC.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+        gameTypeDescriptionHC.setTextAlignment(TextAlignment.CENTER);
+        gameTypeDescriptionHH.setFill(neonLightBlue);
+        gameTypeDescriptionHH.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+        gameTypeDescriptionHH.setTextAlignment(TextAlignment.CENTER);
+        //Panes
+        gameTypePaneHC = new Pane(gameTypeDescriptionHC);
+        gameTypePaneHC.setBackground(pastelDarkRedBackground);
+
+        gameTypePaneHH = new Pane(gameTypeDescriptionHH);
+        gameTypePaneHH.setBackground(pastelDarkRedBackground);
+        gameTypePaneHH.setPadding(new Insets(50,5,5,5));
+
+
         //VBox
         gameTypeVBox = new VBox();
         gameTypeVBox.setPadding(new Insets(20,20,20,20));
+        gameTypeVBox.setSpacing(25);
         gameTypeVBox.setAlignment(Pos.CENTER);
         gameTypeVBox.setMaxHeight(600);
         gameTypeVBox.setMinHeight(600);
         gameTypeVBox.setMaxWidth(600);
         gameTypeVBox.setMinWidth(600);
         gameTypeVBox.getChildren().addAll(playerMenuText1, gameTypeCompButton, gameTypeHumanButton);
+        //menuVBox.getChildren().addAll(gameTypePaneHC);
 
 
 
@@ -345,7 +366,7 @@ public class Othello extends Application {
     public void mouseGameTypeButton( MouseEvent e){
         Button bu = (Button)e.getSource();
         Player opponent;
-        if(bu.getText()=="1 Human : 1 Computer"){
+        if(bu.getText()=="Human vs. Computer"){
             opponent = new Player(2, "computer");
             gameType = "withComp";
         }
@@ -357,7 +378,7 @@ public class Othello extends Application {
         ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),opponent));
         g = new Game(b,players);
         //Replace with gridPane now
-       updateBorderPane();
+       updateBorderPaneToGame();
 
 
     }
@@ -463,10 +484,11 @@ public class Othello extends Application {
      * TopVBox will have points added to it
      * Center of Borderpane will be replaced the the gridpane and messageVBox via the middle VBox
      */
-    public void updateBorderPane(){
+    public void updateBorderPaneToGame(){
         /**
          * Populate Menu VBox with: menuText, additional stuff?
          */
+        menuVBox.getChildren().clear();
         menuVBox.getChildren().add(menuText);
         /**
          * Populate TopVBox with: points, timer? (Title is already in place)
@@ -481,7 +503,15 @@ public class Othello extends Application {
         /**
          * Populate BottomVBox with buttons
          */
-        bottomHBox.getChildren().addAll(newGameButton,passTurnButton,exitButton);
+        bottomHBox.getChildren().addAll(newGameButton,passTurnButton);
+    }
+
+    /**
+     * This method is to be used by newGame functionality when menu will be needed again to determine
+     * gameType
+     */
+    public void updateBorderPaneToMenu(){
+
     }
     public static void main(String[] args){
         launch(args);
