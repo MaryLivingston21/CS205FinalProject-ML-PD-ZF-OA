@@ -1,4 +1,5 @@
-import javafx.scene.layout.HBox;
+import javafx.geometry.Insets;
+import javafx.scene.layout.*;
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -15,7 +16,21 @@ public class TilePane extends HBox{
     public int row,col;
     private int control;
     private boolean isValid;
+    // shadedMediumBlue #2d706f   for potential valid moves functionality
     private Color mediumBlue = Color.web("#429E9D");
+    Color neonLightBlue = Color.rgb(102,252,241);
+    Background neonLightBlueBackground = new Background(new BackgroundFill(Color.web("#66fcf1"), CornerRadii.EMPTY, Insets.EMPTY));
+    Background darkBlueBackground = new Background(new BackgroundFill(Color.web("#1f2833"), CornerRadii.EMPTY, Insets.EMPTY));
+    Background pastelRedBackground = new Background(new BackgroundFill(Color.web("#FF9AA2"), CornerRadii.EMPTY, Insets.EMPTY));
+    Background pastelGreenBackground = new Background(new BackgroundFill(Color.web("#77dd77"), CornerRadii.EMPTY, Insets.EMPTY));
+    Background pastelDarkRedBackground = new Background(new BackgroundFill(Color.web("#FF3A49"), CornerRadii.EMPTY, Insets.EMPTY));
+    Background mediumBlueBackground = new Background(new BackgroundFill(Color.web("#429E9D"), CornerRadii.EMPTY, Insets.EMPTY));
+    Background darkGreenBackground = new Background(new BackgroundFill(Color.web("#0A3A2A"), CornerRadii.EMPTY, Insets.EMPTY));
+    Border neonLightBlueBorder = new Border(new BorderStroke(neonLightBlue, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+    Border darkGreenBorder = new Border(new BorderStroke(Color.web("#0A3A2A"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+    Border darkRedBorder = new Border(new BorderStroke(Color.web("#FF3A49"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+    Border pastelGreenBorder = new Border(new BorderStroke(Color.web("#77dd77"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+
     /**
      Sole Constructor that writes text and displays unselected Tile HBoxes
      @param s is a tile object from which the tilepane will be contructed from
@@ -36,7 +51,8 @@ public class TilePane extends HBox{
         //set size dimensions of tile pane
         this.setPrefSize(75, 75);
         //sets width and color of border initially 
-        setBorderStyle(isValid);
+        this.setBorder(darkGreenBorder);
+        this.setBackground(mediumBlueBackground);
         //create Circle object with information from tile object
         piece = new Circle();
         //set radius
@@ -73,12 +89,10 @@ public class TilePane extends HBox{
     //Will set border style depending on if this square is a valid move
     public void setBorderStyle(boolean isValid){
         if(isValid){
-            this.setStyle("-fx-border-width: 1;" +
-                    "-fx-border-color:#FFFFFF;"+"-fx-background-color:#429E9D;");
+            this.setBorder(pastelGreenBorder);
         }
         else{
-            this.setStyle("-fx-border-width: 1;" +
-                    "-fx-border-color:#0A3A2A;"+"-fx-background-color:#429E9D;");
+            this.setBorder(darkRedBorder);
         }
     }
     public Square getSquare()
