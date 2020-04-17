@@ -155,7 +155,6 @@ public class Othello extends Application {
         gameTypeCompButton.setOnMouseReleased(this::mouseGameTypeButton);
         gameTypeCompButton.setOnMousePressed(this::mousePressedButton);
 
-
         gameTypeHumanButton = new Button("  Human vs. Human  ");
         gameTypeHumanButton.setBackground(neonLightBlueBackground);
         gameTypeHumanButton.setOnMouseEntered(this::mouseEnterButton);
@@ -361,7 +360,15 @@ public class Othello extends Application {
     public void handleClick(MouseEvent e) {
         TilePane tp = (TilePane) e.getSource();
         messageText.setText("Selected Tile - Row: " + tp.getRow() + " Col: " + tp.getCol());
-        //TODO::This is where game logic should go I think
+
+        // TODO: This is where game logic should go I think
+        Color playerColor;
+        Player currentPlayer = g.getCurrentPlayer();
+        if(g.isValidMove(currentPlayer,tp.getSquare()) != null){
+            if(tp.getControl() == 0){
+                g.playPiece(tp.getSquare());
+            }
+        }
     }
     public void mouseGameTypeButton( MouseEvent e){
         Button bu = (Button)e.getSource();
