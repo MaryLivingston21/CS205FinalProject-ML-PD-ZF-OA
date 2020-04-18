@@ -97,8 +97,8 @@ public class Othello extends Application {
 
         b = new Board();
         //TODO:: Change. This is temporary because I'm confused
-        //ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),new Player(2,"human")));
-        //g = new Game(b,players);
+        ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),new Player(2,"human")));
+        g = new Game(b,players);
 
         //TODO:: Add timer class and create timer
 
@@ -136,6 +136,12 @@ public class Othello extends Application {
         {
             passTurnButton.setBackground(pastelDarkRedBackground);
             //TODO::ADD functionality
+            boolean valid = g.forfeitTurn(g.getCurrentPlayer());
+            if(valid){
+                messageText.setText("Turn Forfeited");
+            } else{
+                messageText.setText("Valid move exists, cannot pass");
+            }
         });
 
         exitButton = new Button("Exit Program");
