@@ -326,6 +326,8 @@ public class Game {
         return whoseTurn;
     }
 
+    public Player getPlayer(int n){return players.get(n);}
+
     public int getScore(Player p){
         return p.getScore();
     }

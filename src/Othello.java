@@ -389,9 +389,11 @@ public class Othello extends Application {
          */
         if(player.getPlayerNumber()==1){
             p1Points.setText(player.getScore()+ " Pieces");
+            p2Points.setText(g.getPlayer(1).getScore()+ " Pieces");
         }
         else{
             p2Points.setText(player.getScore()+ " Pieces");
+            p1Points.setText(g.getPlayer(0).getScore()+ " Pieces");
         }
         updateTurnText(player);
     }
