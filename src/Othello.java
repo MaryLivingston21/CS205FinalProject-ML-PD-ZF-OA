@@ -371,7 +371,6 @@ public class Othello extends Application {
         TilePane tp = (TilePane) e.getSource();
         messageText.setText("Selected Tile - Row: " + tp.getRow() + " Col: " + tp.getCol());
         // TODO: This is where game logic should go I think
-        Color playerColor;
         Player player = g.getCurrentPlayer();
         if(g.isValidMove(player,tp.getSquare()) != null){
             if(tp.getControl() == 0){
