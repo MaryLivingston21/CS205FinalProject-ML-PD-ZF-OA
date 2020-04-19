@@ -86,7 +86,14 @@ public class Game {
         if (moves.isEmpty()){
             return false;
         } else{
-            passTurn();
+            // if player 1 has turn, pass to player 2
+            if (whoseTurn == players.get(0)){
+                whoseTurn = players.get(1);
+            }
+            // if player 1 does not have turn, give player 1 turn
+            else {
+                whoseTurn = players.get(0);
+            }
             return true;
         }
     }
@@ -326,6 +333,8 @@ public class Game {
     public Player getCurrentPlayer(){
         return whoseTurn;
     }
+
+    public Player getPlayer(int n){return players.get(n);}
 
     public int getScore(Player p){
         return p.getScore();

@@ -45,13 +45,14 @@ public class Board {
 
         //s1 and s2 are in the same col (vertical flip)
         if(s1.getCol() == s2.getCol()){
-
+            System.out.print("Vertical - ");
 
             //if s1 has a higher row than s2
             if(s1.getRow() > s2.getRow()){
+                System.out.print("Bottom to Top\n");
                 currentRow = s1.getRow();
                 //loop down to s2's row
-                while(currentRow > s2.getRow()){
+                while(currentRow >= s2.getRow()){
                     //get the  square in currentRow, and set the user to the player who flipped it
                     getSquare(currentRow, s1.getCol()).setUser(currentPlayer);
                     currentRow--;
@@ -61,9 +62,10 @@ public class Board {
 
             //if s1 has a lower row than s2
             else if(s1.getRow() < s2.getRow()){
+                System.out.print("Top to Bottom\n");
                 currentRow = s1.getRow();
                 //loop up to s2's row
-                while(currentRow < s2.getRow()){
+                while(currentRow <= s2.getRow()){
                     //get the  square in currentRow, and set the user to the player who flipped it
                     getSquare(currentRow, s1.getCol()).setUser(currentPlayer);
                     currentRow++;
@@ -80,12 +82,13 @@ public class Board {
 
         //s1 and s2 are in the same row (horizontal flip)
         else if(s1.getRow() == s2.getRow()){
-
+            System.out.print("Horizontal - ");
             //if s1 has a higher column than s2
             if(s1.getCol() > s2.getCol()){
+                System.out.print("Right to Left\n");
                 currentCol = s1.getCol();
                 //loop down to s2's column
-                while(currentCol > s2.getCol()){
+                while(currentCol >= s2.getCol()){
                     //get the  square in currentCol, and set the user to the player who flipped it
                     getSquare(s1.getRow(), currentCol).setUser(currentPlayer);
                     currentCol--;
@@ -96,8 +99,9 @@ public class Board {
             //if s1 has a lower column than s2
             if(s1.getCol() < s2.getCol()){
                 currentCol = s1.getCol();
+                System.out.print("Left to Right\n");
                 //loop up to s2's column
-                while(currentCol < s2.getCol()){
+                while(currentCol <= s2.getCol()){
                     //get the  square in currentCol, and set the user to the player who flipped it
                     getSquare(s1.getRow(), currentCol).setUser(currentPlayer);
                     currentCol++;
@@ -108,17 +112,19 @@ public class Board {
 
         //s1 and s2 are in different rows and cols (diagonal flip)
         else{
-
+            System.out.print("Diagonal - ");
             //s1 vs s2: higher col and higher row
             if(s1.getCol() > s2.getCol() && s1.getRow() > s2.getRow()){
+                System.out.print("Bottom Right to Top Left\n");
 
                 currentCol = s1.getCol();
-                currentRow = s2.getRow();
+                currentRow = s1.getRow();
 
                 //loop down to s2's column and row (if truly diagonal, both conditions should be satisfied at the same time
-                while(currentCol > s2.getCol() && currentRow > s2.getRow()){
+                while(currentCol >= s2.getCol() && currentRow >= s2.getRow()){
+                    System.out.println("Flipping: "+getSquare(currentRow,currentCol));
                     //get the  square in currentCol, and set the user to the player who flipped it
-                    getSquare(s1.getRow(), currentCol).setUser(currentPlayer);
+                    getSquare(currentRow, currentCol).setUser(currentPlayer);
                     currentCol--;
                     currentRow--;
                     count++;
@@ -127,14 +133,15 @@ public class Board {
 
             //s1 vs s2: lower col and lower row
             else if(s1.getCol() < s2.getCol() && s1.getRow() < s2.getRow()){
-
+                System.out.print("Top Left to Bottom Right\n");
                 currentCol = s1.getCol();
-                currentRow = s2.getRow();
+                currentRow = s1.getRow();
 
                 //loop up to s2's column and row (if truly diagonal, both conditions should be satisfied at the same time
-                while(currentCol < s2.getCol() && currentRow < s2.getRow()){
+                while(currentCol <= s2.getCol() && currentRow <= s2.getRow()){
+                    System.out.println("Flipping: "+getSquare(currentRow,currentCol));
                     //get the  square in currentCol, and set the user to the player who flipped it
-                    getSquare(s1.getRow(), currentCol).setUser(currentPlayer);
+                    getSquare(currentRow, currentCol).setUser(currentPlayer);
                     currentCol++;
                     currentRow++;
                     count++;
@@ -143,14 +150,15 @@ public class Board {
 
             //s1 vs s2: higher col and lower row
             else if(s1.getCol() > s2.getCol() && s1.getRow() < s2.getRow()){
-
+                System.out.print("Top Right to Bottom Left\n");
                 currentCol = s1.getCol();
-                currentRow = s2.getRow();
+                currentRow = s1.getRow();
 
                 //loop to s2's column and row (if truly diagonal, both conditions should be satisfied at the same time
-                while(currentCol > s2.getCol() && currentRow < s2.getRow()){
+                while(currentCol >= s2.getCol() && currentRow <= s2.getRow()){
+                    System.out.println("Flipping: "+getSquare(currentRow,currentCol));
                     //get the  square in currentCol, and set the user to the player who flipped it
-                    getSquare(s1.getRow(), currentCol).setUser(currentPlayer);
+                    getSquare(currentRow, currentCol).setUser(currentPlayer);
                     currentCol--;
                     currentRow++;
                     count++;
@@ -159,14 +167,15 @@ public class Board {
 
             //s1 vs s2: lower col and higher row
             else if(s1.getCol() < s2.getCol() && s1.getRow() > s2.getRow()){
-
+                System.out.print("Bottom Left to Top Right\n");
                 currentCol = s1.getCol();
-                currentRow = s2.getRow();
+                currentRow = s1.getRow();
 
                 //loop to s2's column and row (if truly diagonal, both conditions should be satisfied at the same time
-                while(currentCol < s2.getCol() && currentRow > s2.getRow()){
+                while(currentCol <= s2.getCol() && currentRow >= s2.getRow()){
+                    System.out.println("Flipping: "+getSquare(currentRow,currentCol));
                     //get the  square in currentCol, and set the user to the player who flipped it
-                    getSquare(s1.getRow(), currentCol).setUser(currentPlayer);
+                    getSquare(currentRow, currentCol).setUser(currentPlayer);
                     currentCol++;
                     currentRow--;
                     count++;

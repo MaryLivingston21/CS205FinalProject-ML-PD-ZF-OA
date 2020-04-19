@@ -58,9 +58,10 @@ public class Othello extends Application {
     VBox ruleVBox = new VBox();//will contain rules
     VBox gameTypeVBox; //VBox to display options for type players at beginning of game
     VBox middle;
+    VBox turnVBox;
     Button newGameButton, passTurnButton,exitButton,gameTypeCompButton,gameTypeHumanButton;//buttons
     Pane menuPane, rulePane; //panes to hold text
-    Text messageText, p1Points, p2Points,playerMenuText1,titleText,menuText,ruleText,gameTypeDescriptionHH,gameTypeDescriptionHC;
+    Text messageText, p1Points, p2Points,playerMenuText,titleText,menuText,ruleText,gameTypeDescriptionHH,gameTypeDescriptionHC,turnText;
 
     //Circle Objects
     Circle wCircle = new Circle(30, Color.WHITE);//Symbols that represent player
@@ -96,8 +97,8 @@ public class Othello extends Application {
 
         b = new Board();
         //TODO:: Change. This is temporary because I'm confused
-        //ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),new Player(2,"human")));
-        //g = new Game(b,players);
+        ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),new Player(2,"human")));
+        g = new Game(b,players);
 
         //TODO:: Add timer class and create timer
 
@@ -135,6 +136,12 @@ public class Othello extends Application {
         {
             passTurnButton.setBackground(pastelDarkRedBackground);
             //TODO::ADD functionality
+            boolean valid = g.forfeitTurn(g.getCurrentPlayer());
+            if(valid){
+                messageText.setText("Turn Forfeited");
+            } else{
+                messageText.setText("Valid move exists, cannot pass");
+            }
         });
 
         exitButton = new Button("Exit Program");
@@ -260,6 +267,26 @@ public class Othello extends Application {
 
 
 
+    /**
+     * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     * turnVBox and turn text
+     * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     */
+
+
+        turnText = new Text("Your Turn");
+        turnText.setFill(Color.BLACK);
+        turnText.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+        turnVBox = new VBox(turnText);
+        turnVBox.setMaxHeight(20);
+        turnVBox.setMinHeight(20);
+        turnVBox.setMinWidth(100);
+        turnVBox.setMaxWidth(100);
+        turnVBox.setAlignment(Pos.CENTER);
+        turnVBox.setBackground(neonLightBlueBackground);
+
+
+
 
         /**
          * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -295,10 +322,11 @@ public class Othello extends Application {
          * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
          */
 
+
         //Text
-        playerMenuText1 = new Text("Select Game Type");
-        playerMenuText1.setFill(neonLightBlue);
-        playerMenuText1.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        playerMenuText = new Text("Select Game Type");
+        playerMenuText.setFill(neonLightBlue);
+        playerMenuText.setFont(Font.font("Arial", FontWeight.BOLD, 30));
         gameTypeDescriptionHC = new Text("\n\n Human vs Computer: Play against a computer AI trained by Mary");
         gameTypeDescriptionHH = new Text("Human vs Human: Play against a friend... or your self");
         gameTypeDescriptionHC.setFill(neonLightBlue);
@@ -314,11 +342,7 @@ public class Othello extends Application {
         gameTypeVBox.setMinHeight(600);
         gameTypeVBox.setMaxWidth(600);
         gameTypeVBox.setMinWidth(600);
-        gameTypeVBox.getChildren().addAll(playerMenuText1, gameTypeCompButton, gameTypeHumanButton,gameTypeDescriptionHC,gameTypeDescriptionHH);
-
-
-
-
+        gameTypeVBox.getChildren().addAll(playerMenuText, gameTypeCompButton, gameTypeHumanButton,gameTypeDescriptionHC,gameTypeDescriptionHH);
         //Add all panes to borderPane and set style properties of borderPane
         borderPane.setTop(topHBox);
         borderPane.setRight(ruleVBox);
@@ -347,17 +371,36 @@ public class Othello extends Application {
 
 
     public void handleClick(MouseEvent e) {
+        /**
+         * Determine if valid move, flip approprite pieces, redraw board
+         */
         TilePane tp = (TilePane) e.getSource();
         messageText.setText("Selected Tile - Row: " + tp.getRow() + " Col: " + tp.getCol());
-
         // TODO: This is where game logic should go I think
-        Color playerColor;
-        Player currentPlayer = g.getCurrentPlayer();
-        if(g.isValidMove(currentPlayer,tp.getSquare()) != null){
+        Player player = g.getCurrentPlayer();
+        if(g.isValidMove(player,tp.getSquare()) != null){
             if(tp.getControl() == 0){
+                int x = player.getScore() -1 ;
                 g.playPiece(tp.getSquare());
+                messageText.setText(player.getScore()-x + " piece(s) flipped!");
+                updateGridPane();
             }
         }
+        else{
+            messageText.setText("Invalid Move");
+        }
+        /**
+         * Update Score in GUI
+         */
+        if(player.getPlayerNumber()==1){
+            p1Points.setText(player.getScore()+ " Pieces");
+            p2Points.setText(g.getPlayer(1).getScore()+ " Pieces");
+        }
+        else{
+            p2Points.setText(player.getScore()+ " Pieces");
+            p1Points.setText(g.getPlayer(0).getScore()+ " Pieces");
+        }
+        updateTurnText(player);
     }
     public void mouseGameTypeButton( MouseEvent e){
         Button bu = (Button)e.getSource();
@@ -420,36 +463,6 @@ public class Othello extends Application {
         tp.setBorder(darkGreenBorder);
         tp.setBackground(mediumBlueBackground);
     }
-    //Method will call drawBoard and set style of properties of gridPane
-    public void setGridPane()
-    {
-        gridPane=drawBoard();
-        gridPane.setMaxHeight(600);
-        gridPane.setMinHeight(600);
-        gridPane.setMaxWidth(600);
-        gridPane.setMinWidth(600);
-        gridPane.setStyle("-fx-border-color:#0A3A2A;"+"-fx-border-width:6px;");//Give GridPane a border and color it
-
-
-        //Construct board and get gridPane
-        middle = new VBox();
-        //Construct messageVBox and message text. Message text will be updated through out game
-        messageText = new Text("Game Type: " + gameType);
-        messageText.setFill(neonLightBlue);
-        messageText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-
-        messageVBox.setMaxHeight(50);
-        messageVBox.setMinHeight(50);
-        messageVBox.setMinWidth(400);
-        messageVBox.setAlignment(Pos.CENTER);
-        messageVBox.setPadding(new Insets(0,0,20,0));
-        messageVBox.getChildren().add(messageText);
-        middle.getChildren().addAll(messageVBox,gridPane);
-        middle.setAlignment(Pos.CENTER);
-        middle.setPadding(new Insets(10));
-
-
-    }
     //Method will use game class to get tiles and construct tilePanes, and add to gridPane
     public GridPane drawBoard(){
         GridPane gp = new GridPane();
@@ -467,7 +480,42 @@ public class Othello extends Application {
                 gp.add(tp,c,r);
             }
         }
+        //GUI properties
+        gp.setMaxHeight(600);
+        gp.setMinHeight(600);
+        gp.setMaxWidth(600);
+        gp.setMinWidth(600);
+        gp.setStyle("-fx-border-color:#0A3A2A;"+"-fx-border-width:6px;");
         return gp;
+    }
+
+    /**
+     Experimental only, this is bad code
+     */
+    public void updateGridPane(){
+        //Experimental, not good code
+        GridPane gp = drawBoard();
+        middle.getChildren().clear();
+        middle.getChildren().addAll(messageVBox,gp,turnVBox);
+        borderPane.setCenter(middle);
+    }
+    public void updateTurnText(Player player){
+        if(player.getPlayerNumber()==1){
+            if(gameType=="withComp"){
+                turnText.setText("Computer Turn");
+            }
+            else{
+                turnText.setText("Player 2 Turn");
+            }
+        }
+        else{
+            if(gameType=="withComp"){
+                turnText.setText("Your Turn");
+            }
+            else{
+                turnText.setText("Player 1 Turn");
+            }
+        }
     }
 
     /**
@@ -494,8 +542,33 @@ public class Othello extends Application {
         /**
          * Replace Game Type menu with grid pane and message
          */
-        setGridPane();
+        gridPane = drawBoard();
+        //Construct board and get gridPane
+        middle = new VBox();
+        //Construct messageVBox and message text. Message text will be updated through out game
+        messageText = new Text("Game Type: " + gameType);
+        //Styling
+        messageText.setFill(neonLightBlue);
+        messageText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        messageVBox.setMaxHeight(50);
+        messageVBox.setMinHeight(50);
+        messageVBox.setMinWidth(400);
+        messageVBox.setAlignment(Pos.CENTER);
+        messageVBox.setPadding(new Insets(0,0,20,0));
+        middle.setAlignment(Pos.CENTER);
+        middle.setPadding(new Insets(10,10,10,10));
+        middle.setSpacing(15);
+        //Adding children
+        messageVBox.getChildren().add(messageText);
+        middle.getChildren().addAll(messageVBox,gridPane,turnVBox);
         borderPane.setCenter(middle);
+        //update turn text
+        if(gameType=="withComp"){
+            turnText.setText("Your Turn");
+        }
+        else{
+            turnText.setText("Player 1 Turn");
+        }
         /**
          * Populate BottomVBox with buttons
          */
