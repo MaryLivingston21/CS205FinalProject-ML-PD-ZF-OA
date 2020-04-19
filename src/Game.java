@@ -88,7 +88,7 @@ public class Game {
      */
     public boolean forfeitTurn(Player p){
         ArrayList<Move> moves = getValidMoves(p);
-        if (moves.isEmpty()){
+        if (!moves.isEmpty()){
             return false;
         } else{
             // if player 1 has turn, pass to player 2
