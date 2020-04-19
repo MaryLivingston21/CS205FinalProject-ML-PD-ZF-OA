@@ -126,7 +126,7 @@ public class Othello extends Application {
             newGameButton.setBackground(pastelDarkRedBackground);
 
         });
-        passTurnButton = new Button("Pass Turn");
+        passTurnButton = new Button("Forfeit Turn");
         passTurnButton.setBackground(neonLightBlueBackground);
         passTurnButton.setOnMouseEntered(this::mouseEnterButton);
         passTurnButton.setOnMouseExited(this::mouseExitButton);
@@ -139,6 +139,7 @@ public class Othello extends Application {
             boolean valid = g.forfeitTurn(g.getCurrentPlayer());
             if(valid){
                 messageText.setText("Turn Forfeited");
+                updateTurnText(g.getCurrentPlayer());
             } else{
                 messageText.setText("Valid move exists, cannot pass");
             }
