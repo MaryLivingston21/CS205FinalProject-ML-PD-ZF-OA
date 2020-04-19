@@ -380,7 +380,7 @@ public class Othello extends Application {
         Player player = g.getCurrentPlayer();
         if(g.isValidMove(player,tp.getSquare()) != null){
             if(tp.getControl() == 0){
-                int x = player.getScore() -1 ;
+                int x = player.getScore() - 1;
                 g.playPiece(tp.getSquare());
                 messageText.setText(player.getScore()-x + " piece(s) flipped!");
                 updateGridPane();

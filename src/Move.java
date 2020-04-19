@@ -59,11 +59,4 @@ public class Move {
             }
         }
     }
-
-//    @Override
-//    public String toString(){
-//        return this.sPlaced + " is placed " + this.col;
-//    }
-
-
 }
