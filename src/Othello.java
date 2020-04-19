@@ -502,7 +502,7 @@ public class Othello extends Application {
     }
     public void updateTurnText(Player player){
         if(player.getPlayerNumber()==1){
-            if(gameType=="withComp"){
+            if(gameType.equals("withComp")){
                 turnText.setText("Computer Turn");
             }
             else{
@@ -510,7 +510,7 @@ public class Othello extends Application {
             }
         }
         else{
-            if(gameType=="withComp"){
+            if(gameType.equals("withComp")){
                 turnText.setText("Your Turn");
             }
             else{
