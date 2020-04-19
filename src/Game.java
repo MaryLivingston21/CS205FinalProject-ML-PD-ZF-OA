@@ -28,6 +28,7 @@ public class Game {
             for (int i=0;i<s2.size();i++){
                 gameBoard.adjustBoard(currP, s1, s2.get(i));
             }
+            System.out.println("Numflipped: " + m.getNumFlipped());
             currP.adjustScore(m.getNumFlipped() + 1);
             otherP.adjustScore(m.getNumFlipped() * -1);
             whoseTurn = otherP;
@@ -57,6 +58,7 @@ public class Game {
             for (int i=0;i<s2.size();i++){
                 gameBoard.adjustBoard(currP, s1, s2.get(i));
             }
+            System.out.println("Numflipped: " + m.getNumFlipped());
             currP.adjustScore(m.getNumFlipped() + 1);
             otherP.adjustScore(m.getNumFlipped() * -1);
             whoseTurn = otherP;
