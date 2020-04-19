@@ -96,22 +96,63 @@ public class AdjustBoardTests {
 
     @Test
     public void diagonalTopRightToBottomLeft() {
+        board = new Board();
+        g = new Game(board, players);
 
+        board.adjustBoard(players.get(0),g.getSquare(1,7),g.getSquare(4,4));
+
+        System.out.print(board);
+
+        Assert.assertEquals(1, board.getSquare(1,7).getUser());
+        Assert.assertEquals(1, board.getSquare(2,6).getUser());
+        Assert.assertEquals(1, board.getSquare(3,5).getUser());
+        Assert.assertEquals(1, board.getSquare(4,4).getUser());
     }
 
     @Test
     public void diagonalBottomLeftToTopRight() {
+        board = new Board();
+        g = new Game(board, players);
 
+        board.adjustBoard(players.get(0),g.getSquare(4,4),g.getSquare(1,7));
+
+        System.out.print(board);
+
+        Assert.assertEquals(1, board.getSquare(4,4).getUser());
+        Assert.assertEquals(1, board.getSquare(3,5).getUser());
+        Assert.assertEquals(1, board.getSquare(2,6).getUser());
+        Assert.assertEquals(1, board.getSquare(1,7).getUser());
     }
 
     @Test
     public void diagonalBottomRightToTopLeft() {
+        board = new Board();
+        g = new Game(board, players);
+
+        board.adjustBoard(players.get(0),g.getSquare(8,8),g.getSquare(5,5));
+
+        System.out.print(board);
+
+        Assert.assertEquals(1, board.getSquare(8,8).getUser());
+        Assert.assertEquals(1, board.getSquare(7,7).getUser());
+        Assert.assertEquals(1, board.getSquare(6,6).getUser());
+        Assert.assertEquals(1, board.getSquare(5,5).getUser());
 
     }
 
     @Test
     public void diagonalTopLeftToBottomRight() {
+        board = new Board();
+        g = new Game(board, players);
 
+        board.adjustBoard(players.get(0),g.getSquare(5,5),g.getSquare(8,8));
+
+        System.out.print(board);
+
+        Assert.assertEquals(1, board.getSquare(5,5).getUser());
+        Assert.assertEquals(1, board.getSquare(6,6).getUser());
+        Assert.assertEquals(1, board.getSquare(7,7).getUser());
+        Assert.assertEquals(1, board.getSquare(8,8).getUser());
     }
 
 
