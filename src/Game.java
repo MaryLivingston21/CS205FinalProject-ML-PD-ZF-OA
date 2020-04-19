@@ -119,13 +119,13 @@ public class Game {
         int playerNum = p.getPlayerNumber();
         ArrayList<Square> currentBoard = gameBoard.getBoard();
         for (int i=0; i<currentBoard.size(); i++){
-            int numFlipped = 0;
             // if square is not occupied
             if (currentBoard.get(i).getUser() == 0) {
                 Square s = currentBoard.get(i);
                 int row = s.getRow();
                 int col = s.getCol();
                 // check down vertical
+                int numFlipped = 0;
                 for (int j = row + 1; j < 9; j++) {
                     if (getSquare(j, col).getUser() == 0) {
                         // if square has not been played on
@@ -154,6 +154,7 @@ public class Game {
                     }
                 }
                 // check up vertical
+                numFlipped = 0;
                 for (int j = row - 1; j > 0; j--) {
                     if (getSquare(j, col).getUser() == 0) {
                         // if square has not been played on
@@ -182,6 +183,7 @@ public class Game {
                     }
                 }
                 // check right horizontal
+                numFlipped = 0;
                 for (int j = col - 1; j > 0; j--) {
                     if (getSquare(row, j).getUser() == 0) {
                         // if square has not been played on
@@ -211,6 +213,7 @@ public class Game {
                     }
                 }
                 // check left horizontal
+                numFlipped = 0;
                 for (int j = col + 1; j < 9; j++) {
                     if (getSquare(row, j).getUser() == 0) {
                         // if square has not been played on
@@ -240,6 +243,7 @@ public class Game {
                 }
 
                 // bottom right diagonal
+                numFlipped = 0;
                 int j = col + 1;
                 int k = row + 1;
                 while (j < 9 && k < 9) {
@@ -272,6 +276,7 @@ public class Game {
                     k++;
                 }
                 // bottom left diagonal
+                numFlipped = 0;
                 j = col + 1;
                 k = row - 1;
                 while (j < 9 && k > 0) {
@@ -304,6 +309,7 @@ public class Game {
                     k--;
                 }
                 // top left diagonal
+                numFlipped = 0;
                 j = col - 1;
                 k = row - 1;
                 while (j > 0 && k > 0) {
@@ -336,6 +342,7 @@ public class Game {
                     k--;
                 }
                 // top right diagonal
+                numFlipped = 0;
                 j = col - 1;
                 k = row + 1;
                 while (j > 0 && k < 9) {
