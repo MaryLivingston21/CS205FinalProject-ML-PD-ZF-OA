@@ -192,12 +192,12 @@ public class Game {
                         numFlipped++;
                     } else if (numFlipped > 0) {
                         // if belongs to current user && 1+ squares are flipped
-                        Move m = new Move(s, getSquare(j, col), numFlipped);
+                        Move m = new Move(s, getSquare(row, j), numFlipped);
                         //check if already in possible moves
                         boolean inValidMoves = false;
                         for (int z = 0; z<possibleMoves.size(); z++){
                             if (possibleMoves.get(z).equals(m)){
-                                possibleMoves.get(z).addEndSquare(getSquare(j, col));
+                                possibleMoves.get(z).addEndSquare(getSquare(row, j));
                                 possibleMoves.get(z).setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
                                 inValidMoves = true;
                             }
@@ -220,12 +220,12 @@ public class Game {
                         numFlipped++;
                     } else if (numFlipped > 0) {
                         // if belongs to current user && 1+ squares are flipped
-                        Move m = new Move(s, getSquare(j, col), numFlipped);
+                        Move m = new Move(s, getSquare(row, j), numFlipped);
                         //check if already in possible moves
                         boolean inValidMoves = false;
                         for (int z = 0; z<possibleMoves.size(); z++){
                             if (possibleMoves.get(z).equals(m)){
-                                possibleMoves.get(z).addEndSquare(getSquare(j, col));
+                                possibleMoves.get(z).addEndSquare(getSquare(row, j));
                                 possibleMoves.get(z).setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
                                 inValidMoves = true;
                             }
@@ -251,12 +251,12 @@ public class Game {
                         numFlipped++;
                     } else if (numFlipped > 0) {
                         // if belongs to current user && 1+ squares are flipped
-                        Move m = new Move(s, getSquare(j, col), numFlipped);
+                        Move m = new Move(s, getSquare(k, j), numFlipped);
                         //check if already in possible moves
                         boolean inValidMoves = false;
                         for (int z = 0; z<possibleMoves.size(); z++){
                             if (possibleMoves.get(z).equals(m)){
-                                possibleMoves.get(z).addEndSquare(getSquare(j, col));
+                                possibleMoves.get(z).addEndSquare(getSquare(k,j));
                                 possibleMoves.get(z).setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
                                 inValidMoves = true;
                             }
@@ -283,12 +283,12 @@ public class Game {
                         numFlipped++;
                     } else if (numFlipped > 0) {
                         // if belongs to current user && 1+ squares are flipped
-                        Move m = new Move(s, getSquare(j, col), numFlipped);
+                        Move m = new Move(s, getSquare(k,j), numFlipped);
                         //check if already in possible moves
                         boolean inValidMoves = false;
                         for (int z = 0; z<possibleMoves.size(); z++){
                             if (possibleMoves.get(z).equals(m)){
-                                possibleMoves.get(z).addEndSquare(getSquare(j, col));
+                                possibleMoves.get(z).addEndSquare(getSquare(k,j));
                                 possibleMoves.get(z).setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
                                 inValidMoves = true;
                             }
@@ -315,12 +315,12 @@ public class Game {
                         numFlipped++;
                     } else if (numFlipped > 0) {
                         // if belongs to current user && 1+ squares are flipped
-                        Move m = new Move(s, getSquare(j, col), numFlipped);
+                        Move m = new Move(s, getSquare(k,j), numFlipped);
                         //check if already in possible moves
                         boolean inValidMoves = false;
                         for (int z = 0; z<possibleMoves.size(); z++){
                             if (possibleMoves.get(z).equals(m)){
-                                possibleMoves.get(z).addEndSquare(getSquare(j, col));
+                                possibleMoves.get(z).addEndSquare(getSquare(k,j));
                                 possibleMoves.get(z).setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
                                 inValidMoves = true;
                             }
@@ -347,12 +347,12 @@ public class Game {
                         numFlipped++;
                     } else if (numFlipped > 0) {
                         // if belongs to current user && 1+ squares are flipped
-                        Move m = new Move(s, getSquare(j, col), numFlipped);
+                        Move m = new Move(s, getSquare(k,j), numFlipped);
                         //check if already in possible moves
                         boolean inValidMoves = false;
                         for (int z = 0; z<possibleMoves.size(); z++){
                             if (possibleMoves.get(z).equals(m)){
-                                possibleMoves.get(z).addEndSquare(getSquare(j, col));
+                                possibleMoves.get(z).addEndSquare(getSquare(k,j));
                                 possibleMoves.get(z).setNumFlipped(numFlipped + possibleMoves.get(z).getNumFlipped());
                                 inValidMoves = true;
                             }
