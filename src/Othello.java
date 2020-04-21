@@ -97,8 +97,8 @@ public class Othello extends Application {
 
         b = new Board();
         //TODO:: Change. This is temporary because I'm confused
-        ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),new Player(2,"human")));
-        g = new Game(b,players);
+        //ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),new Player(2,"human")));
+        //g = new Game(b,players);
 
         //TODO:: Add timer class and create timer
 
@@ -122,8 +122,9 @@ public class Othello extends Application {
         newGameButton.setOnMousePressed(this::mousePressedButton);
         newGameButton.setOnAction(event->
         {
-            //TODO::Add fucntionality
+            //TODO::Add functionality for newGame
             newGameButton.setBackground(pastelDarkRedBackground);
+            updateBorderPaneToMenu();
 
         });
         passTurnButton = new Button("Forfeit Turn");
@@ -135,13 +136,14 @@ public class Othello extends Application {
         passTurnButton.setOnAction(event->
         {
             passTurnButton.setBackground(pastelDarkRedBackground);
-            //TODO::ADD functionality
             boolean valid = g.forfeitTurn(g.getCurrentPlayer());
             if(valid){
+                //TODO::Fix updateTurnText
                 messageText.setText("Turn Forfeited");
-                updateTurnText(g.getCurrentPlayer());
+                //updateTurnText(g.getCurrentPlayer());
             } else{
                 messageText.setText("Valid move exists, cannot pass");
+                //updateTurnText(g.getCurrentPlayer());
             }
         });
 
@@ -153,7 +155,6 @@ public class Othello extends Application {
         exitButton.setOnMousePressed(this::mousePressedButton);
         exitButton.setOnAction(event ->
         {
-            newGameButton.setBackground(pastelDarkRedBackground);
             Platform.exit();
 
         });
@@ -188,7 +189,7 @@ public class Othello extends Application {
 
 
         //Construct VBoxes for players points -> will be contained in topHBox
-        p1Points = new Text("2 Pieces");//TODO::Construct a function to update these values
+        p1Points = new Text("2 Pieces");
         p1Points.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         p1Points.setFill(neonLightBlue);
         p2Points = new Text("2 Pieces");
@@ -232,7 +233,7 @@ public class Othello extends Application {
 
 
         //Construct bottomHBox -> contains buttons and timer(when I add it)
-        //TODO:: Add new game and timer
+        //TODO:: Add timer
         bottomHBox.setPadding(new Insets(20));
         bottomHBox.setSpacing(15);
         bottomHBox.setBackground(darkBlueBackground);
@@ -373,11 +374,10 @@ public class Othello extends Application {
 
     public void handleClick(MouseEvent e) {
         /**
-         * Determine if valid move, flip approprite pieces, redraw board
+         * Determine if valid move, flip appropriate pieces, redraw board
          */
         TilePane tp = (TilePane) e.getSource();
         messageText.setText("Selected Tile - Row: " + tp.getRow() + " Col: " + tp.getCol());
-        // TODO: This is where game logic should go I think
         Player player = g.getCurrentPlayer();
         if(g.isValidMove(player,tp.getSquare()) != null){
             if(tp.getControl() == 0){
@@ -390,17 +390,7 @@ public class Othello extends Application {
         else{
             messageText.setText("Invalid Move");
         }
-        /**
-         * Update Score in GUI
-         */
-        if(player.getPlayerNumber()==1){
-            p1Points.setText(player.getScore()+ " Pieces");
-            p2Points.setText(g.getPlayer(1).getScore()+ " Pieces");
-        }
-        else{
-            p2Points.setText(player.getScore()+ " Pieces");
-            p1Points.setText(g.getPlayer(0).getScore()+ " Pieces");
-        }
+        updateScore();
         updateTurnText(player);
     }
     public void mouseGameTypeButton( MouseEvent e){
@@ -409,18 +399,19 @@ public class Othello extends Application {
         if(bu.getText()=="Human vs. Computer"){
             opponent = new Player(2, "computer");
             gameType = "withComp";
+            messageText = new Text("Game Type: Human vs Computer");
         }
         else{
             opponent = new Player(2, "human");
             gameType = "Humans";
+            messageText = new Text("Game Type: Human vs Human");
         }
         //Game will initialized with two human players
         ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),opponent));
+        b = new Board();
         g = new Game(b,players);
         //Replace with gridPane now
        updateBorderPaneToGame();
-
-
     }
     public void mouseEnterButton(MouseEvent e){
         Button bu = (Button)e.getSource();
@@ -486,10 +477,9 @@ public class Othello extends Application {
         gp.setMinHeight(600);
         gp.setMaxWidth(600);
         gp.setMinWidth(600);
-        gp.setStyle("-fx-border-color:#0A3A2A;"+"-fx-border-width:6px;");
+        gp.setStyle("-fx-border-color:#0A3A2A;"+"-fx-border-width:10px;");
         return gp;
     }
-
     /**
      Experimental only, this is bad code
      */
@@ -499,6 +489,10 @@ public class Othello extends Application {
         middle.getChildren().clear();
         middle.getChildren().addAll(messageVBox,gp,turnVBox);
         borderPane.setCenter(middle);
+    }
+    public void updateScore(){
+            p1Points.setText(g.getPlayer(0).getScore()+ " Pieces");
+            p2Points.setText(g.getPlayer(1).getScore()+ " Pieces");
     }
     public void updateTurnText(Player player){
         if(player.getPlayerNumber()==1){
@@ -518,7 +512,6 @@ public class Othello extends Application {
             }
         }
     }
-
     /**
      * When the game first starts, oly the options to choose player type should display(along with title and rules)
      * All other containers should be empty. This will also be state when new game is called. But after option
@@ -533,11 +526,12 @@ public class Othello extends Application {
         /**
          * Populate Menu VBox with: menuText, additional stuff?
          */
-        menuVBox.getChildren().clear();
-        menuVBox.getChildren().add(menuText);
+
         /**
          * Populate TopVBox with: points, timer? (Title is already in place)
          */
+        p1PointsVBox.getChildren().clear();
+        p2PointsVBox.getChildren().clear();
         p1PointsVBox.getChildren().addAll(bCircle,p1Points);//Add circles and texts to VBoxes
         p2PointsVBox.getChildren().addAll(wCircle,p2Points);
         /**
@@ -547,7 +541,6 @@ public class Othello extends Application {
         //Construct board and get gridPane
         middle = new VBox();
         //Construct messageVBox and message text. Message text will be updated through out game
-        messageText = new Text("Game Type: " + gameType);
         //Styling
         messageText.setFill(neonLightBlue);
         messageText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -560,7 +553,9 @@ public class Othello extends Application {
         middle.setPadding(new Insets(10,10,10,10));
         middle.setSpacing(15);
         //Adding children
+        messageVBox.getChildren().clear();
         messageVBox.getChildren().add(messageText);
+        middle.getChildren().clear();
         middle.getChildren().addAll(messageVBox,gridPane,turnVBox);
         borderPane.setCenter(middle);
         //update turn text
@@ -573,11 +568,18 @@ public class Othello extends Application {
         /**
          * Populate BottomVBox with buttons
          */
-        bottomHBox.getChildren().addAll(newGameButton,passTurnButton);
+        bottomHBox.getChildren().clear();
+        bottomHBox.getChildren().addAll(newGameButton,exitButton,passTurnButton);
         /**
          * Populate RulesVBox
          */
+        ruleVBox.getChildren().clear();
         ruleVBox.getChildren().add(ruleText);
+        /**
+         * Reset various styling details
+         */
+        updateScore();
+        newGameButton.setBackground(neonLightBlueBackground);
     }
 
     /**
@@ -585,6 +587,19 @@ public class Othello extends Application {
      * gameType
      */
     public void updateBorderPaneToMenu(){
+        //Reset Game and Redraw Board
+        //Remove the following from the border pane:
+            //points
+        p1PointsVBox.getChildren().clear();
+        p2PointsVBox.getChildren().clear();
+            //rules
+        ruleVBox.getChildren().clear();
+            //buttons
+        bottomHBox.getChildren().clear();
+        bottomHBox.getChildren().add(exitButton);
+        //Replace center pane
+        borderPane.setCenter(gameTypeVBox);
+        //newGameButton needs to be updated when game is reset.
 
     }
     public static void main(String[] args){
