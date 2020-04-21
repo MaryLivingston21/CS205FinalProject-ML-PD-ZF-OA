@@ -41,6 +41,7 @@ public class Othello extends Application {
 
     private Game g;
     private Board b;
+    GridPane gp;
     String gameType;
     ArrayList<Player> players;
 
@@ -94,23 +95,11 @@ public class Othello extends Application {
      */
     @Override
     public void start(Stage primaryStage){
-
-        b = new Board();
-        //TODO:: Change. This is temporary because I'm confused
-        //ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),new Player(2,"human")));
-        //g = new Game(b,players);
-
-        //TODO:: Add timer class and create timer
-
-
-
-
         /**
          * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
          * Various Buttons
          * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
          */
-
 
 
 
@@ -122,10 +111,8 @@ public class Othello extends Application {
         newGameButton.setOnMousePressed(this::mousePressedButton);
         newGameButton.setOnAction(event->
         {
-            //TODO::Add functionality for newGame
             newGameButton.setBackground(pastelDarkRedBackground);
             updateBorderPaneToMenu();
-
         });
         passTurnButton = new Button("Forfeit Turn");
         passTurnButton.setBackground(neonLightBlueBackground);
@@ -138,15 +125,12 @@ public class Othello extends Application {
             passTurnButton.setBackground(pastelDarkRedBackground);
             boolean valid = g.forfeitTurn(g.getCurrentPlayer());
             if(valid){
-                //TODO::Fix updateTurnText
                 messageText.setText("Turn Forfeited");
-                //updateTurnText(g.getCurrentPlayer());
+                updateTurnText();
             } else{
                 messageText.setText("Valid move exists, cannot pass");
-                //updateTurnText(g.getCurrentPlayer());
             }
         });
-
         exitButton = new Button("Exit Program");
         exitButton.setBackground(neonLightBlueBackground);
         exitButton.setOnMouseEntered(this::mouseEnterButton);
@@ -156,7 +140,6 @@ public class Othello extends Application {
         exitButton.setOnAction(event ->
         {
             Platform.exit();
-
         });
         gameTypeCompButton = new Button("Human vs. Computer");
         gameTypeCompButton.setBackground(neonLightBlueBackground);
@@ -317,6 +300,28 @@ public class Othello extends Application {
 
 
 
+        /**
+         * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+         * styling for center of border pane ie. message and
+         * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+         */
+
+
+        messageText = new Text();
+        messageText.setFill(neonLightBlue);
+        messageText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        messageVBox.setMaxHeight(50);
+        messageVBox.setMinHeight(50);
+        messageVBox.setMinWidth(400);
+        messageVBox.setAlignment(Pos.CENTER);
+        messageVBox.setPadding(new Insets(0,0,20,0));
+        middle = new VBox();
+        middle.setAlignment(Pos.CENTER);
+        middle.setPadding(new Insets(10,10,10,10));
+        middle.setSpacing(15);
+
+
+
 
         /**
          * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -371,11 +376,10 @@ public class Othello extends Application {
 
 
 
-
+    /**
+     * handleClick handles when a tile pane is clicked on
+     */
     public void handleClick(MouseEvent e) {
-        /**
-         * Determine if valid move, flip appropriate pieces, redraw board
-         */
         TilePane tp = (TilePane) e.getSource();
         messageText.setText("Selected Tile - Row: " + tp.getRow() + " Col: " + tp.getCol());
         Player player = g.getCurrentPlayer();
@@ -385,26 +389,34 @@ public class Othello extends Application {
                 g.playPiece(tp.getSquare());
                 messageText.setText(player.getScore()-x + " piece(s) flipped!");
                 updateGridPane();
+                updateTurnText();
+                updateScore();
             }
         }
         else{
             messageText.setText("Invalid Move");
         }
-        updateScore();
-        updateTurnText(player);
     }
+
+    /**
+     * mouseGameTypeButton detects which game type has been chosen.
+     * In this function the game object is initialized
+     * GUI is also updated to display board
+     */
     public void mouseGameTypeButton( MouseEvent e){
         Button bu = (Button)e.getSource();
         Player opponent;
         if(bu.getText()=="Human vs. Computer"){
             opponent = new Player(2, "computer");
             gameType = "withComp";
-            messageText = new Text("Game Type: Human vs Computer");
+            //messageText = new Text("Game Type: Human vs Computer");
+            messageText.setText("Game Type: Human vs Computer");
         }
         else{
             opponent = new Player(2, "human");
             gameType = "Humans";
-            messageText = new Text("Game Type: Human vs Human");
+           // messageText = new Text("Game Type: Human vs Human");
+            messageText.setText("Game Type: Human vs Human");
         }
         //Game will initialized with two human players
         ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),opponent));
@@ -455,9 +467,11 @@ public class Othello extends Application {
         tp.setBorder(darkGreenBorder);
         tp.setBackground(mediumBlueBackground);
     }
-    //Method will use game class to get tiles and construct tilePanes, and add to gridPane
-    public GridPane drawBoard(){
-        GridPane gp = new GridPane();
+    /**
+     * drawBoard will update GUI board depending on properties stored in board object
+     */
+    public void drawBoard(){
+        GridPane newGridPane = new GridPane();
         TilePane tp;
         Square s;
         for(int r=1; r<9;r++)
@@ -469,33 +483,40 @@ public class Othello extends Application {
                 tp.setOnMouseClicked(this::handleClick);
                 tp.setOnMouseEntered(this::mouseEnter);
                 tp.setOnMouseExited(this::mouseExit);
-                gp.add(tp,c,r);
+                newGridPane.add(tp,c,r);
             }
         }
         //GUI properties
-        gp.setMaxHeight(600);
-        gp.setMinHeight(600);
-        gp.setMaxWidth(600);
-        gp.setMinWidth(600);
-        gp.setStyle("-fx-border-color:#0A3A2A;"+"-fx-border-width:10px;");
-        return gp;
+        newGridPane.setMaxHeight(600);
+        newGridPane.setMinHeight(600);
+        newGridPane.setMaxWidth(600);
+        newGridPane.setMinWidth(600);
+        newGridPane.setStyle("-fx-border-color:#0A3A2A;"+"-fx-border-width:5px;");
+        gp = newGridPane;
     }
     /**
-     Experimental only, this is bad code
+     Update GridPane(The Actual Board) to display current state of the board
      */
     public void updateGridPane(){
-        //Experimental, not good code
-        GridPane gp = drawBoard();
+        drawBoard();
         middle.getChildren().clear();
         middle.getChildren().addAll(messageVBox,gp,turnVBox);
         borderPane.setCenter(middle);
     }
+    /**
+     Update the points for each player
+     */
     public void updateScore(){
-            p1Points.setText(g.getPlayer(0).getScore()+ " Pieces");
-            p2Points.setText(g.getPlayer(1).getScore()+ " Pieces");
+        p1Points.setText(g.getPlayer(0).getScore()+ " Pieces");
+        p2Points.setText(g.getPlayer(1).getScore()+ " Pieces");
     }
-    public void updateTurnText(Player player){
-        if(player.getPlayerNumber()==1){
+
+    /**
+     * updateTurnText method updates the text displaying whose turn it is.
+     */
+    public void updateTurnText(){
+        int player = g.getCurrentPlayer().getPlayerNumber();
+        if(player==2){
             if(gameType=="withComp"){
                 turnText.setText("Computer Turn");
             }
@@ -513,20 +534,15 @@ public class Othello extends Application {
         }
     }
     /**
-     * When the game first starts, oly the options to choose player type should display(along with title and rules)
+     * When the game first starts, only the options to choose player type should display(along with title and rules)
      * All other containers should be empty. This will also be state when new game is called. But after option
      * is selected and game object is initialized, all containers should be populated. This is this function:
      *
-     * Menu VBox will be populated
      * BottomVBox with buttons will be populated
      * TopVBox will have points added to it
      * Center of Borderpane will be replaced the the gridpane and messageVBox via the middle VBox
      */
     public void updateBorderPaneToGame(){
-        /**
-         * Populate Menu VBox with: menuText, additional stuff?
-         */
-
         /**
          * Populate TopVBox with: points, timer? (Title is already in place)
          */
@@ -537,26 +553,14 @@ public class Othello extends Application {
         /**
          * Replace Game Type menu with grid pane and message
          */
-        gridPane = drawBoard();
-        //Construct board and get gridPane
-        middle = new VBox();
+        drawBoard();
+        //Construct board and update/set gridpane
         //Construct messageVBox and message text. Message text will be updated through out game
-        //Styling
-        messageText.setFill(neonLightBlue);
-        messageText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        messageVBox.setMaxHeight(50);
-        messageVBox.setMinHeight(50);
-        messageVBox.setMinWidth(400);
-        messageVBox.setAlignment(Pos.CENTER);
-        messageVBox.setPadding(new Insets(0,0,20,0));
-        middle.setAlignment(Pos.CENTER);
-        middle.setPadding(new Insets(10,10,10,10));
-        middle.setSpacing(15);
         //Adding children
         messageVBox.getChildren().clear();
         messageVBox.getChildren().add(messageText);
         middle.getChildren().clear();
-        middle.getChildren().addAll(messageVBox,gridPane,turnVBox);
+        middle.getChildren().addAll(messageVBox,gp,turnVBox);
         borderPane.setCenter(middle);
         //update turn text
         if(gameType=="withComp"){
