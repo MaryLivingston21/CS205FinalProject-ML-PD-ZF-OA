@@ -509,6 +509,7 @@ public class Othello extends Application {
     public void updateScore(){
         p1Points.setText(g.getPlayer(0).getScore()+ " Pieces");
         p2Points.setText(g.getPlayer(1).getScore()+ " Pieces");
+        System.out.println("gameOver: "+g.isGameOver());
     }
 
     /**

@@ -7,11 +7,13 @@ public class Game {
     private static Board gameBoard;
     private ArrayList<Player> players;
     private Player whoseTurn;
+    private boolean gameOver;
 
     public Game(Board board, ArrayList<Player> players){
         gameBoard = board;
         this.players = players;
         whoseTurn = players.get(0);
+        this.gameOver = false;
     }
 
     public boolean computerPlayPiece(){
@@ -397,5 +399,25 @@ public class Game {
 
         return gameBoard.getSquare(r,c);
 
+    }
+
+    public boolean isGameOver() {
+        //variable for storing whether a valid turn has been found or not
+        boolean validTurn = false;
+
+        //loop through all players
+        for(int i = 0; i<players.size(); i++) {
+            //see if that player has any valid moves
+            if(this.getValidMoves(players.get(i)).size() > 0){
+                //a player with valid moves was found, set validTurn to true
+                validTurn = true;
+                System.out.println("Player "+ i+1 +" has a valid move");
+            }
+        }
+
+        //if there is a validTurn, gameOver is false. if there is no validTurn, gameOver is true
+        this.gameOver = !validTurn;
+
+        return gameOver;
     }
 }
