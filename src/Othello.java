@@ -388,9 +388,18 @@ public class Othello extends Application {
                 int x = player.getScore() + 1;
                 g.playPiece(tp.getSquare());
                 messageText.setText(player.getScore()-x + " piece(s) flipped!");
+
+                for(int i = 0; i < b.getBoard().size(); i++){
+                    b.getBoard().get(i).setMostRecent(false);
+                }
+
+                tp.getSquare().setMostRecent(true);
+
                 updateGridPane();
                 updateTurnText();
                 updateScore();
+
+
             }
         }
         else{
