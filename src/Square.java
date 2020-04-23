@@ -2,11 +2,13 @@ public class Square {
     private int row;
     private int col;
     private int userNumber;
+    private boolean mostRecent;
 
     public Square(int r, int c){
         row = r;
         col = c;
         userNumber = 0;
+        this.mostRecent = false;
     }
 
     public void setUser(int userNumber){
@@ -23,6 +25,14 @@ public class Square {
 
     public int getUser(){
         return userNumber;
+    }
+
+    public void setMostRecent(boolean mostRecent) {
+        this.mostRecent = mostRecent;
+    }
+
+    public boolean isMostRecent() {
+        return mostRecent;
     }
 
     public boolean equals(Object other) {

@@ -24,8 +24,7 @@ public class Board {
         return board;
     }
 
-    public void adjustBoard(Player p, Square s1, Square s2){
-        //TODO:: does not need int return!!
+    public int adjustBoard(Player p, Square s1, Square s2){
         System.out.println("Running adjustBoard between  ("+s1.getRow()+","+s1.getCol()+") and ("+s2.getRow()+","+s2.getCol()+")");
         //s1 is the square played, s2 is the square on the other side of the sandwich (middle pieces flipped)
         // setUser(p.getPLayerNumber()) for each of the squares being flipped and the square the user just put a piece on
@@ -54,9 +53,14 @@ public class Board {
                 //loop down to s2's row
                 while(currentRow >= s2.getRow()){
                     //get the  square in currentRow, and set the user to the player who flipped it
-                    getSquare(currentRow, s1.getCol()).setUser(currentPlayer);
+
+                    if(getSquare(currentRow, s1.getCol()).getUser() != currentPlayer){
+                        getSquare(currentRow, s1.getCol()).setUser(currentPlayer);
+                        count++;
+                    }
+
                     currentRow--;
-                    count++;
+
                 }
             }
 
@@ -67,9 +71,14 @@ public class Board {
                 //loop up to s2's row
                 while(currentRow <= s2.getRow()){
                     //get the  square in currentRow, and set the user to the player who flipped it
-                    getSquare(currentRow, s1.getCol()).setUser(currentPlayer);
+
+                    if(getSquare(currentRow, s1.getCol()).getUser() != currentPlayer){
+                        getSquare(currentRow, s1.getCol()).setUser(currentPlayer);
+                        count++;
+                    }
+
                     currentRow++;
-                    count++;
+
                 }
             }
 
@@ -90,9 +99,13 @@ public class Board {
                 //loop down to s2's column
                 while(currentCol >= s2.getCol()){
                     //get the  square in currentCol, and set the user to the player who flipped it
-                    getSquare(s1.getRow(), currentCol).setUser(currentPlayer);
+                    if(getSquare(s1.getRow(), currentCol).getUser() != currentPlayer){
+                        getSquare(s1.getRow(), currentCol).setUser(currentPlayer);
+                        count++;
+                    }
+
                     currentCol--;
-                    count++;
+
                 }
             }
 
@@ -103,9 +116,13 @@ public class Board {
                 //loop up to s2's column
                 while(currentCol <= s2.getCol()){
                     //get the  square in currentCol, and set the user to the player who flipped it
-                    getSquare(s1.getRow(), currentCol).setUser(currentPlayer);
+                    if(getSquare(s1.getRow(), currentCol).getUser() != currentPlayer){
+                        getSquare(s1.getRow(), currentCol).setUser(currentPlayer);
+                        count++;
+                    }
+
                     currentCol++;
-                    count++;
+
                 }
             }
         }
@@ -124,10 +141,15 @@ public class Board {
                 while(currentCol >= s2.getCol() && currentRow >= s2.getRow()){
                     System.out.println("Flipping: "+getSquare(currentRow,currentCol));
                     //get the  square in currentCol, and set the user to the player who flipped it
-                    getSquare(currentRow, currentCol).setUser(currentPlayer);
+                    if(getSquare(currentRow, currentCol).getUser() != currentPlayer){
+                        getSquare(currentRow, currentCol).setUser(currentPlayer);
+                        count++;
+                    }
+
+
                     currentCol--;
                     currentRow--;
-                    count++;
+
                 }
             }
 
@@ -141,10 +163,14 @@ public class Board {
                 while(currentCol <= s2.getCol() && currentRow <= s2.getRow()){
                     System.out.println("Flipping: "+getSquare(currentRow,currentCol));
                     //get the  square in currentCol, and set the user to the player who flipped it
-                    getSquare(currentRow, currentCol).setUser(currentPlayer);
+                    if(getSquare(currentRow, currentCol).getUser() != currentPlayer){
+                        getSquare(currentRow, currentCol).setUser(currentPlayer);
+                        count++;
+                    }
+
                     currentCol++;
                     currentRow++;
-                    count++;
+
                 }
             }
 
@@ -158,10 +184,16 @@ public class Board {
                 while(currentCol >= s2.getCol() && currentRow <= s2.getRow()){
                     System.out.println("Flipping: "+getSquare(currentRow,currentCol));
                     //get the  square in currentCol, and set the user to the player who flipped it
-                    getSquare(currentRow, currentCol).setUser(currentPlayer);
+                    if(getSquare(currentRow, currentCol).getUser() != currentPlayer){
+                        getSquare(currentRow, currentCol).setUser(currentPlayer);
+                        count++;
+                    }
+
+
+
                     currentCol--;
                     currentRow++;
-                    count++;
+
                 }
             }
 
@@ -175,10 +207,13 @@ public class Board {
                 while(currentCol <= s2.getCol() && currentRow >= s2.getRow()){
                     System.out.println("Flipping: "+getSquare(currentRow,currentCol));
                     //get the  square in currentCol, and set the user to the player who flipped it
-                    getSquare(currentRow, currentCol).setUser(currentPlayer);
+                    if(getSquare(currentRow, currentCol).getUser() != currentPlayer){
+                        getSquare(currentRow, currentCol).setUser(currentPlayer);
+                        count++;
+                    }
                     currentCol++;
                     currentRow--;
-                    count++;
+
                 }
             }
 
@@ -187,11 +222,11 @@ public class Board {
             }
 
 
-        }
 
-        //Todo:this
-        // https://www.java67.com/2016/08/how-to-replace-element-of-arraylist-in-java.html
-        //return count;
+
+        }
+        System.out.println("AdjustBoard returned "+count);
+        return count;
     }
 
     public ArrayList<Square> getBoard(){

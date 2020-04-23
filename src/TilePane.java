@@ -62,8 +62,24 @@ public class TilePane extends HBox{
         piece.setCenterY(25.0f);
         //Set color of piece, depends on tile
         setPlayerControl(s.getUser());
-        //adds this text object to the children of hbox
-        this.getChildren().add(piece);
+
+        //if this is the most recently played square
+        if(s.isMostRecent()){
+
+            //create an indicator
+            Circle lastIndicator = new Circle(5.0f, Color.DARKRED);
+            //create a stackpane for stacking the indicator and the piece
+            StackPane stack = new StackPane();
+
+            //add the piece and indicator to the stack
+            stack.getChildren().addAll(piece, lastIndicator);
+            //add the stack to the scene
+            this.getChildren().add(stack);
+        }
+        else{
+            //add just the piece to the scene
+            this.getChildren().add(piece);
+        }
 
     }
     /**
@@ -85,6 +101,7 @@ public class TilePane extends HBox{
         else{
             piece.setFill(Color.WHITE);
         }
+
     }
     //Will set border style depending on if this square is a valid move
     public void setBorderStyle(boolean isValid){
