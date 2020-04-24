@@ -6,7 +6,7 @@ import javafx.scene.shape.Circle;
 
 /**TilePane class is a single tile on the board. Contains a
  * Circle object to represent piece and can
- return tile object associated with tilepane. Uses HBox */
+ return tile object associated with tilePane. Uses HBox */
 public class TilePane extends HBox{
 
 
