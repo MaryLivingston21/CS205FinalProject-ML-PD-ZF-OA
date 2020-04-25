@@ -57,12 +57,13 @@ public class Othello extends Application {
     VBox p2PointsVBox = new VBox(5);
     VBox menuVBox = new VBox();//will hold the menu of options
     VBox ruleVBox = new VBox();//will contain rules
-    VBox gameTypeVBox; //VBox to display options for type players at beginning of game
-    VBox middle;
+    VBox gameTypeVBox = new VBox(); //VBox to display options for type players at beginning of game
+    VBox middleVBox = new VBox();
     VBox turnVBox;
+    VBox gameOverVBox = new VBox();
     Button newGameButton, passTurnButton,exitButton,gameTypeCompButton,gameTypeHumanButton;//buttons
     Pane menuPane, rulePane; //panes to hold text
-    Text messageText, p1Points, p2Points,playerMenuText,titleText,menuText,ruleText,gameTypeDescriptionHH,gameTypeDescriptionHC,turnText;
+    Text messageText, p1Points, p2Points,playerMenuText,titleText,menuText,ruleText,gameTypeDescriptionHH,gameTypeDescriptionHC,turnText,gameOverText, finalScoreText,winnerText;
 
     //Circle Objects
     Circle wCircle = new Circle(30, Color.WHITE);//Symbols that represent player
@@ -129,6 +130,28 @@ public class Othello extends Application {
                 updateTurnText();
             } else{
                 messageText.setText("Valid move exists, cannot pass");
+            }
+            if(gameType=="withComp"){
+                try {
+                    // delay .3 seconds
+                    Thread.sleep(300);
+                } catch (InterruptedException ex) {
+                    System.err.format("IOException: %s%n", ex);
+                }
+                g.computerPlayPiece();
+                /*
+                for(int i = 0; i < b.getBoard().size(); i++){
+                    b.getBoard().get(i).setMostRecent(false);
+                }
+                tp.getSquare().setMostRecent(true);updateGridPane();
+                 */
+                updateGridPane();
+                updateTurnText();
+                updateScore();
+
+            }
+            if(g.isGameOver()){
+                gameOver();
             }
         });
         exitButton = new Button("Exit Program");
@@ -315,10 +338,9 @@ public class Othello extends Application {
         messageVBox.setMinWidth(400);
         messageVBox.setAlignment(Pos.CENTER);
         messageVBox.setPadding(new Insets(0,0,20,0));
-        middle = new VBox();
-        middle.setAlignment(Pos.CENTER);
-        middle.setPadding(new Insets(10,10,10,10));
-        middle.setSpacing(15);
+        middleVBox.setAlignment(Pos.CENTER);
+        middleVBox.setPadding(new Insets(10,10,10,10));
+        middleVBox.setSpacing(15);
 
 
 
@@ -341,7 +363,6 @@ public class Othello extends Application {
         gameTypeDescriptionHH.setFill(neonLightBlue);
         gameTypeDescriptionHH.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
         //VBox
-        gameTypeVBox = new VBox();
         gameTypeVBox.setPadding(new Insets(20,20,20,20));
         gameTypeVBox.setSpacing(25);
         gameTypeVBox.setAlignment(Pos.CENTER);
@@ -350,11 +371,41 @@ public class Othello extends Application {
         gameTypeVBox.setMaxWidth(600);
         gameTypeVBox.setMinWidth(600);
         gameTypeVBox.getChildren().addAll(playerMenuText, gameTypeCompButton, gameTypeHumanButton,gameTypeDescriptionHC,gameTypeDescriptionHH);
+
+
+
+
+        /**
+         * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+         * gameOver screen properties-> gameOverVBox, texts, buttons
+         * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+         */
+        gameOverText = new Text("Game Over");
+        gameOverText.setFill(neonLightBlue);
+        gameOverText.setFont(Font.font("Arial", FontWeight.BOLD, 35));
+
+        finalScoreText = new Text();
+        finalScoreText.setFill(neonLightBlue);
+        finalScoreText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+        winnerText = new Text();
+        winnerText.setFill(neonLightBlue);
+        winnerText.setFont(Font.font("Arial", FontWeight.BOLD, 27));
+
+        gameOverVBox.setPadding(new Insets(20,20,20,20));
+        gameOverVBox.setSpacing(25);
+        gameOverVBox.setAlignment(Pos.CENTER);
+        gameOverVBox.setMaxHeight(600);
+        gameOverVBox.setMinHeight(600);
+        gameOverVBox.setMaxWidth(600);
+        gameOverVBox.setMinWidth(600);
+        gameOverVBox.getChildren().addAll(gameOverText, finalScoreText,winnerText);
+
         //Add all panes to borderPane and set style properties of borderPane
         borderPane.setTop(topHBox);
         borderPane.setRight(ruleVBox);
         borderPane.setLeft(menuVBox);
-        borderPane.setCenter(middle);
+        borderPane.setCenter(middleVBox);
         borderPane.setCenter(gameTypeVBox);
         borderPane.setBottom(bottomHBox);
         borderPane.setBackground(darkBlueBackground);
@@ -365,7 +416,6 @@ public class Othello extends Application {
         primaryStage.setTitle("Othello");
         primaryStage.show();
     }
-
 
 
     /**
@@ -381,31 +431,67 @@ public class Othello extends Application {
      */
     public void handleClick(MouseEvent e) {
         TilePane tp = (TilePane) e.getSource();
-        messageText.setText("Selected Tile - Row: " + tp.getRow() + " Col: " + tp.getCol());
+        int x;
         Player player = g.getCurrentPlayer();
-        if(g.isValidMove(player,tp.getSquare()) != null){
-            if(tp.getControl() == 0){
-                int x = player.getScore() + 1;
-                g.playPiece(tp.getSquare());
-                messageText.setText(player.getScore()-x + " piece(s) flipped!");
+        if (gameType == "withComp") {
+            if(g.isValidMove(player,tp.getSquare()) != null) {
+                if(tp.getControl()==0) {
+                    x = g.getPlayer(0).getScore();
+                    g.playPiece(tp.getSquare());
+                    messageText.setText("You flipped: " + (g.getPlayer(0).getScore() - x) + " piece(s)");
+                    for(int i = 0; i < b.getBoard().size(); i++){
+                        b.getBoard().get(i).setMostRecent(false);
+                    }
+                    tp.getSquare().setMostRecent(true);
+                    updateGridPane();
+                    updateScore();
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException ex) {
+                        System.err.format("IOException: %s%n", ex);
+                    }
+                    x = g.getPlayer(1).getScore();
+                    if(g.computerPlayPiece()){
+                        messageText.setText("Computer flipped: " + (g.getPlayer(1).getScore() - x) + " piece(s)");
 
-                for(int i = 0; i < b.getBoard().size(); i++){
-                    b.getBoard().get(i).setMostRecent(false);
+                    }
+                    else{
+                        //Computer had no valid moves, and now player control must switch
+                        g.passTurn();
+                    }
+                    for(int i = 0; i < b.getBoard().size(); i++){
+                        b.getBoard().get(i).setMostRecent(false);
+                    }
+                    tp.getSquare().setMostRecent(true);
                 }
-
-                tp.getSquare().setMostRecent(true);
-
-                updateGridPane();
-                updateTurnText();
-                updateScore();
-
-
+            }
+            else {
+                messageText.setText("Invalid Move");
             }
         }
-        else{
-            messageText.setText("Invalid Move");
+        else if(gameType == "Humans") {
+            if (g.isValidMove(player, tp.getSquare()) != null) {
+                if (tp.getControl() == 0) {
+                    x = player.getScore() + 1;
+                    g.playPiece(tp.getSquare());
+                    messageText.setText("Player " + player.getPlayerNumber() + " flipped: "+ (player.getScore() - x) + " piece(s)");
+                }
+            } else {
+                messageText.setText("Invalid Move");
+            }
+        }
+        for(int i = 0; i < b.getBoard().size(); i++){
+            b.getBoard().get(i).setMostRecent(false);
+        }
+        tp.getSquare().setMostRecent(true);
+        updateGridPane();
+        updateTurnText();
+        updateScore();
+        if(g.isGameOver()){
+            gameOver();
         }
     }
+
 
     /**
      * mouseGameTypeButton detects which game type has been chosen.
@@ -476,6 +562,48 @@ public class Othello extends Application {
         tp.setBorder(darkGreenBorder);
         tp.setBackground(mediumBlueBackground);
     }
+
+    /**
+     * gameOver method is called when game is over. Replaces various boxes and panes
+     * to represent end screen.
+     */
+    public void gameOver(){
+        //remove rule text
+        ruleVBox.getChildren().clear();
+        //remove forfeit turn button
+        bottomHBox.getChildren().remove(passTurnButton);
+        //remove menu
+        menuVBox.getChildren().clear();
+        //Determine and display who won
+        if(gameType == "withComp"){
+            if(g.getPlayer(0).getScore()>g.getPlayer(1).getScore()){
+                winnerText.setText("You Won!");
+            }
+            else if(g.getPlayer(0).getScore()<g.getPlayer(1).getScore()){
+                winnerText.setText("The computer won...a silicon wafer is better than you");
+            }
+            else{
+                winnerText.setText("Tie...embarrassing");
+            }
+            finalScoreText.setText("Final Score: \n\n\nYou           - " + g.getPlayer(0).getScore() +
+                    "\nComputer - " + g.getPlayer(1).getScore());
+        }
+        else{
+            if(g.getPlayer(0).getScore()>g.getPlayer(1).getScore()){
+                winnerText.setText("Player 1 Won!");
+            }
+            else if(g.getPlayer(0).getScore()<g.getPlayer(1).getScore()){
+                winnerText.setText("Player 2 Won!");
+            }
+            else{
+                winnerText.setText("Tie!");
+            }
+            finalScoreText.setText("Final Score: \n\nPlayer 1 - " + g.getPlayer(0).getScore() +
+                    "\nPlayer 2 - " + g.getPlayer(1).getScore());
+        }
+        //replace middleVBox with gameOverVBox
+        borderPane.setCenter(gameOverVBox);
+    }
     /**
      * drawBoard will update GUI board depending on properties stored in board object
      */
@@ -508,9 +636,9 @@ public class Othello extends Application {
      */
     public void updateGridPane(){
         drawBoard();
-        middle.getChildren().clear();
-        middle.getChildren().addAll(messageVBox,gp,turnVBox);
-        borderPane.setCenter(middle);
+        middleVBox.getChildren().clear();
+        middleVBox.getChildren().addAll(messageVBox,gp,turnVBox);
+        borderPane.setCenter(middleVBox);
     }
     /**
      Update the points for each player
@@ -518,7 +646,6 @@ public class Othello extends Application {
     public void updateScore(){
         p1Points.setText(g.getPlayer(0).getScore()+ " Pieces");
         p2Points.setText(g.getPlayer(1).getScore()+ " Pieces");
-        System.out.println("gameOver: "+g.isGameOver());
     }
 
     /**
@@ -569,9 +696,9 @@ public class Othello extends Application {
         //Adding children
         messageVBox.getChildren().clear();
         messageVBox.getChildren().add(messageText);
-        middle.getChildren().clear();
-        middle.getChildren().addAll(messageVBox,gp,turnVBox);
-        borderPane.setCenter(middle);
+        middleVBox.getChildren().clear();
+        middleVBox.getChildren().addAll(messageVBox,gp,turnVBox);
+        borderPane.setCenter(middleVBox);
         //update turn text
         if(gameType=="withComp"){
             turnText.setText("Your Turn");
@@ -594,6 +721,9 @@ public class Othello extends Application {
          */
         updateScore();
         newGameButton.setBackground(neonLightBlueBackground);
+        passTurnButton.setBackground(neonLightBlueBackground);
+        exitButton.setBackground(neonLightBlueBackground);
+
     }
 
     /**
