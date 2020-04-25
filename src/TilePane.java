@@ -137,9 +137,8 @@ public class TilePane extends HBox{
     {
         return control;
     }
-    /**
-     * Method to change color of circle
-     */
+
+    /** Method to change color of circle */
     public void changePieceColor(Color c){
         this.piece.setFill(c);
     }
