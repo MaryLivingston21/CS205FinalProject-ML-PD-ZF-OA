@@ -602,8 +602,8 @@ public class Othello extends Application {
             else{
                 winnerText.setText("Tie!");
             }
-            finalScoreText.setText("Final Score: \n\nPlayer 1 - " + g.getPlayer(0).getScore() +
-                    "\nPlayer 2 - " + g.getPlayer(1).getScore());
+            finalScoreText.setText("Final Score: \n\nPlayer 1: " + g.getPlayer(0).getScore() +
+                    "\nPlayer 2: " + g.getPlayer(1).getScore());
         }
         //replace middleVBox with gameOverVBox
         borderPane.setCenter(gameOverVBox);
