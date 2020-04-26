@@ -61,7 +61,7 @@ public class Othello extends Application {
     VBox middleVBox = new VBox();
     VBox turnVBox;
     VBox gameOverVBox = new VBox();
-    Button newGameButton, passTurnButton,exitButton,gameTypeCompButton,gameTypeHumanButton;//buttons
+    Button newGameButton, passTurnButton,exitButton,gameTypeDumbCompButton,gameTypeGreedyCompButton, gameTypeHumanButton;//buttons
     Pane menuPane, rulePane; //panes to hold text
     Text messageText, p1Points, p2Points,playerMenuText,titleText,menuText,ruleText,gameTypeDescriptionHH,gameTypeDescriptionHC,turnText,gameOverText, finalScoreText,winnerText;
 
@@ -131,7 +131,7 @@ public class Othello extends Application {
             } else{
                 messageText.setText("Valid move exists, cannot forfeit your turn");
             }
-            if(gameType=="withComp" && valid){
+            if((gameType.equals("withDumbComp") || gameType.equals("withGreedyComp")) && valid){
                 try {
                     // delay .3 seconds
                     Thread.sleep(300);
@@ -159,12 +159,19 @@ public class Othello extends Application {
         {
             Platform.exit();
         });
-        gameTypeCompButton = new Button("Human vs. Computer");
-        gameTypeCompButton.setBackground(neonLightBlueBackground);
-        gameTypeCompButton.setOnMouseEntered(this::mouseEnterButton);
-        gameTypeCompButton.setOnMouseExited(this::mouseExitButton);
-        gameTypeCompButton.setOnMouseReleased(this::mouseGameTypeButton);
-        gameTypeCompButton.setOnMousePressed(this::mousePressedButton);
+        gameTypeDumbCompButton = new Button("Human vs. Dumb Computer");
+        gameTypeDumbCompButton.setBackground(neonLightBlueBackground);
+        gameTypeDumbCompButton.setOnMouseEntered(this::mouseEnterButton);
+        gameTypeDumbCompButton.setOnMouseExited(this::mouseExitButton);
+        gameTypeDumbCompButton.setOnMouseReleased(this::mouseGameTypeButton);
+        gameTypeDumbCompButton.setOnMousePressed(this::mousePressedButton);
+
+        gameTypeGreedyCompButton = new Button("Human vs. Greedy Computer");
+        gameTypeGreedyCompButton.setBackground(neonLightBlueBackground);
+        gameTypeGreedyCompButton.setOnMouseEntered(this::mouseEnterButton);
+        gameTypeGreedyCompButton.setOnMouseExited(this::mouseExitButton);
+        gameTypeGreedyCompButton.setOnMouseReleased(this::mouseGameTypeButton);
+        gameTypeGreedyCompButton.setOnMousePressed(this::mousePressedButton);
 
         gameTypeHumanButton = new Button("  Human vs. Human  ");
         gameTypeHumanButton.setBackground(neonLightBlueBackground);
@@ -359,7 +366,7 @@ public class Othello extends Application {
         gameTypeVBox.setMinHeight(600);
         gameTypeVBox.setMaxWidth(600);
         gameTypeVBox.setMinWidth(600);
-        gameTypeVBox.getChildren().addAll(playerMenuText, gameTypeCompButton, gameTypeHumanButton,gameTypeDescriptionHC,gameTypeDescriptionHH);
+        gameTypeVBox.getChildren().addAll(playerMenuText, gameTypeDumbCompButton, gameTypeGreedyCompButton, gameTypeHumanButton,gameTypeDescriptionHC,gameTypeDescriptionHH);
 
 
 
@@ -422,7 +429,7 @@ public class Othello extends Application {
         TilePane tp = (TilePane) e.getSource();
         int x;
         Player player = g.getCurrentPlayer();
-        if (gameType == "withComp") {
+        if (gameType.equals("withDumbComp") || gameType.equals("withGreedyComp")) {
             if(g.isValidMove(player,tp.getSquare()) != null) {
                 if(tp.getControl()==0) {
                     x = g.getPlayer(0).getScore();
@@ -457,7 +464,7 @@ public class Othello extends Application {
                 messageText.setText("Invalid Move");
             }
         }
-        else if(gameType == "Humans") {
+        else if(gameType.equals("Humans")) {
             if (g.isValidMove(player, tp.getSquare()) != null) {
                 if (tp.getControl() == 0) {
                     x = player.getScore() + 1;
@@ -492,13 +499,17 @@ public class Othello extends Application {
     public void mouseGameTypeButton( MouseEvent e){
         Button bu = (Button)e.getSource();
         Player opponent;
-        if(bu.getText()=="Human vs. Computer"){
+        if(bu.getText()=="Human vs. Dumb Computer"){
             opponent = new Player(2, "computer");
-            gameType = "withComp";
+            gameType = "withDumbComp";
             //messageText = new Text("Game Type: Human vs Computer");
             messageText.setText("Game Type: Human vs Computer");
-        }
-        else{
+        } else if(bu.getText()=="Human vs. Greedy Computer") {
+            opponent = new Player(2, "computer");
+            gameType = "withGreedyComp";
+            //messageText = new Text("Game Type: Human vs Computer");
+            messageText.setText("Game Type: Human vs Computer");
+        }else{
             opponent = new Player(2, "human");
             gameType = "Humans";
            // messageText = new Text("Game Type: Human vs Human");
@@ -507,7 +518,13 @@ public class Othello extends Application {
         //Game will initialized with two human players
         ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(new Player(1,"human"),opponent));
         b = new Board();
-        g = new Game(b,players);
+        if (gameType.equals("withGreedyComp")){
+            g = new Game(b, players, "greedy");
+        } else if ((gameType.equals("withDumbComp"))){
+            g = new Game(b, players, "dumb");
+        }else {
+            g = new Game(b, players);
+        }
         //Replace with gridPane now
        updateBorderPaneToGame();
     }
@@ -567,7 +584,7 @@ public class Othello extends Application {
         //remove menu
         menuVBox.getChildren().clear();
         //Determine and display who won
-        if(gameType == "withComp"){
+        if(gameType.equals("withDumbComp") || gameType.equals("withGreedyComp")){
             if(g.getPlayer(0).getScore()>g.getPlayer(1).getScore()){
                 winnerText.setText("You Won!");
             }
@@ -646,7 +663,7 @@ public class Othello extends Application {
     public void updateTurnText(){
         int player = g.getCurrentPlayer().getPlayerNumber();
         if(player==2){
-            if(gameType=="withComp"){
+            if(gameType.equals("withDumbComp") || gameType.equals("withGreedyComp")){
                 turnText.setText("Computer Turn");
             }
             else{
@@ -654,7 +671,7 @@ public class Othello extends Application {
             }
         }
         else{
-            if(gameType=="withComp"){
+            if(gameType.equals("withDumbComp") || gameType.equals("withGreedyComp")){
                 turnText.setText("Your Turn");
             }
             else{
@@ -692,7 +709,7 @@ public class Othello extends Application {
         middleVBox.getChildren().addAll(messageVBox,gp,turnVBox);
         borderPane.setCenter(middleVBox);
         //update turn text
-        if(gameType=="withComp"){
+        if(gameType.equals("withDumbComp") || gameType.equals("withGreedyComp")){
             turnText.setText("Your Turn");
         }
         else{

@@ -10,6 +10,18 @@ public class Game {
     private boolean gameOver;
     private String compType; // "dumb" "greedy"
 
+    public Game(Board board, ArrayList<Player> players, String compType){
+        gameBoard = board;
+        this.players = players;
+        whoseTurn = players.get(0);
+        this.gameOver = false;
+        if (compType.equals("dumb") || compType.equals("greedy")) {
+            this.compType = compType;
+        } else {
+            this.compType = "dumb";
+        }
+    }
+
     public Game(Board board, ArrayList<Player> players){
         gameBoard = board;
         this.players = players;
