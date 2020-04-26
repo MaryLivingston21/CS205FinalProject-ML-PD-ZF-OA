@@ -129,9 +129,9 @@ public class Othello extends Application {
                 messageText.setText("Turn Forfeited");
                 updateTurnText();
             } else{
-                messageText.setText("Valid move exists, cannot pass");
+                messageText.setText("Valid move exists, cannot forfeit your turn");
             }
-            if(gameType=="withComp"){
+            if(gameType=="withComp" && valid){
                 try {
                     // delay .3 seconds
                     Thread.sleep(300);
@@ -607,8 +607,8 @@ public class Othello extends Application {
             else{
                 winnerText.setText("Tie!");
             }
-            finalScoreText.setText("Final Score: \n\nPlayer 1 - " + g.getPlayer(0).getScore() +
-                    "\nPlayer 2 - " + g.getPlayer(1).getScore());
+            finalScoreText.setText("Final Score: \n\nPlayer 1: " + g.getPlayer(0).getScore() +
+                    "\nPlayer 2: " + g.getPlayer(1).getScore());
         }
         //replace middleVBox with gameOverVBox
         borderPane.setCenter(gameOverVBox);
