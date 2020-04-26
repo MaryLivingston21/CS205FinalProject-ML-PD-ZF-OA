@@ -139,12 +139,7 @@ public class Othello extends Application {
                     System.err.format("IOException: %s%n", ex);
                 }
                 g.computerPlayPiece();
-                /*
-                for(int i = 0; i < b.getBoard().size(); i++){
-                    b.getBoard().get(i).setMostRecent(false);
-                }
-                tp.getSquare().setMostRecent(true);updateGridPane();
-                 */
+              
                 updateGridPane();
                 updateTurnText();
                 updateScore();
@@ -201,8 +196,7 @@ public class Othello extends Application {
         p2Points = new Text("2 Pieces");
         p2Points.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         p2Points.setFill(neonLightBlue);
-        //p1PointsVBox.getChildren().addAll(bCircle,p1Points);//Add circles and texts to VBoxes
-        //p2PointsVBox.getChildren().addAll(wCircle,p2Points);
+        
         p1PointsVBox.setAlignment(Pos.CENTER_LEFT);//set position in box
         p2PointsVBox.setAlignment(Pos.CENTER_RIGHT);
         p1PointsVBox.setMinWidth(300);//set width to keep from squishing containers together
@@ -265,13 +259,10 @@ public class Othello extends Application {
         menuText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         menuText.setFill(neonLightBlue);
         menuPane = new Pane(menuText);
-        //menuVBox.getChildren().add(menuText);
         menuVBox.setPadding(new Insets(20,50,20,50));
         menuVBox.setStyle("-fx-border-color:#45a29e; -fx-border-width : 0 2 0 2 ");
         menuVBox.setMinWidth(300);
         menuVBox.setMaxWidth(300);
-        //TODO:: Add Menu options and associated functionality
-
 
 
     /**
@@ -314,7 +305,6 @@ public class Othello extends Application {
         ruleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         ruleText.setFill(neonLightBlue);
         rulePane = new Pane(ruleText);
-        //ruleVBox.getChildren().add(ruleText);
         ruleVBox.setPadding(new Insets(20,50,20,50));
         ruleVBox.setStyle("-fx-border-color:#45a29e; -fx-border-width : 0 2 0 2 ");
         ruleVBox.setMinWidth(300);
@@ -458,10 +448,6 @@ public class Othello extends Application {
                         //Computer had no valid moves, and now player control must switch
                         g.passTurn();
                     }
-//                    for(int i = 0; i < b.getBoard().size(); i++){
-//                        b.getBoard().get(i).setMostRecent(false);
-//                    }
-////                    tp.getSquare().setMostRecent(true);
                     updateGridPane();
                     updateTurnText();
                     updateScore();
@@ -488,10 +474,7 @@ public class Othello extends Application {
                 messageText.setText("Invalid Move");
             }
         }
-//        for(int i = 0; i < b.getBoard().size(); i++){
-//            b.getBoard().get(i).setMostRecent(false);
-//        }
-//        tp.getSquare().setMostRecent(true);
+
         updateGridPane();
         updateTurnText();
         updateScore();
