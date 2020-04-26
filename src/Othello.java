@@ -129,7 +129,7 @@ public class Othello extends Application {
                 messageText.setText("Turn Forfeited");
                 updateTurnText();
             } else{
-                messageText.setText("Valid move exists, cannot pass");
+                messageText.setText("Valid move exists, cannot forfeit your turn");
             }
             if(gameType=="withComp"){
                 try {
