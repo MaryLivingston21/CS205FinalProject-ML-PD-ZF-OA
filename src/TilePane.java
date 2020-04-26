@@ -120,28 +120,28 @@ public class TilePane extends HBox{
         return s;
     }
 
-    /**getRow method returns row of square
-       @return returns row */
+    /** getRow method returns row of square
+        @return returns row */
     public int getRow()
     {
         return row;
     }
 
-    /**getCol method returns col of square
-       @return returns int that is col*/
+    /** getCol method returns col of square
+        @return returns int that is col*/
     public int getCol()
     {
         return col;
     }
 
-    /**getControl method returns number representing which player controls the square
-       @return int control*/
+    /** getControl method returns number representing which player controls the square
+        @return int control*/
     public int getControl()
     {
         return control;
     }
 
-    /**Method to change color of circle */
+    /** Method to change color of circle */
     public void changePieceColor(Color c){
         this.piece.setFill(c);
     }
