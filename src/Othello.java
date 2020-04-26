@@ -131,7 +131,7 @@ public class Othello extends Application {
             } else{
                 messageText.setText("Valid move exists, cannot pass");
             }
-            if(gameType=="withComp"){
+            if(gameType=="withComp" && valid){
                 try {
                     // delay .3 seconds
                     Thread.sleep(300);
