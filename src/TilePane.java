@@ -4,15 +4,16 @@ import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-/**TilePane class is a single tile on the board. Contains a
- * Circle object to represent piece and can
- return tile object associated with tilePane. Uses HBox */
+/** TilePane class is a single tile on the board. Contains a
+ *Circle object to represent piece and can
+  return tile object associated with tilePane. Uses HBox */
 public class TilePane extends HBox{
 
 
     //FIELDS
     private Square s; //is the Tile object that TilePane is based off of
     private  Circle piece; //Circle object whose color will change depend on who controls the board
+    private Circle dot;
     public int row,col;
     private int control;
     private boolean isValid;
@@ -32,8 +33,8 @@ public class TilePane extends HBox{
     Border pastelGreenBorder = new Border(new BorderStroke(Color.web("#77dd77"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
     /**
-     Sole Constructor that writes text and displays unselected Tile HBoxes
-     @param s is a tile object from which the tilepane will be contructed from
+      Sole Constructor that writes text and displays unselected Tile HBoxes
+      @param s is a tile object from which the tilepane will be contructed from
      */
 
     public TilePane(Square s){
@@ -63,6 +64,8 @@ public class TilePane extends HBox{
         //Set color of piece, depends on tile
         setPlayerControl(s.getUser());
 
+
+
         //if this is the most recently played square
         if(s.isMostRecent()){
 
@@ -83,7 +86,7 @@ public class TilePane extends HBox{
 
     }
     /**
-     setPlayer Control method will set the control and change the color of the circle object
+      setPlayer Control method will set the control and change the color of the circle object
      */
 
     public void setPlayerControl(int control)
@@ -117,31 +120,29 @@ public class TilePane extends HBox{
         return s;
     }
 
-    /**getRow method returns row of square
-     @return returns row */
+    /** getRow method returns row of square
+      @return returns row */
     public int getRow()
     {
         return row;
     }
 
-    /**getCol method returns col of square
-     @return returns int that is col*/
+    /** getCol method returns col of square
+      @return returns int that is col*/
     public int getCol()
     {
         return col;
     }
 
-    /**getControl method returns number representing which player controls the square
-     @return int control*/
+    /** getControl method returns number representing which player controls the square
+      @return int control*/
     public int getControl()
     {
         return control;
     }
 
-    /** Method to change color of circle */
+    /**  Method to change color of circle */
     public void changePieceColor(Color c){
         this.piece.setFill(c);
     }
-
-
 }

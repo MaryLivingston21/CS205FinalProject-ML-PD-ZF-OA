@@ -1,3 +1,6 @@
+/**
+ * Square class is used by TilePane to create squares on the board
+ */
 public class Square {
     private int row;
     private int col;
