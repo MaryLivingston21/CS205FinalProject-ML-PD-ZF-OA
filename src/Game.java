@@ -8,12 +8,14 @@ public class Game {
     private ArrayList<Player> players;
     private Player whoseTurn;
     private boolean gameOver;
+    private String compType; // "dumb" "greedy"
 
     public Game(Board board, ArrayList<Player> players){
         gameBoard = board;
         this.players = players;
         whoseTurn = players.get(0);
         this.gameOver = false;
+        compType = "dumb";
     }
 
     public boolean computerPlayPiece(){
@@ -21,16 +23,20 @@ public class Game {
         Player otherP = players.get(0);
         ArrayList<Move> moves = getValidMoves(currP);
         if (moves.size() > 0) {
-            // random move
-//            Random rand = new Random();
-//            int num = rand.nextInt(moves.size());
-            // max flip move
-            int maxFlip = moves.get(0).getNumFlipped();
             Move m = moves.get(0);
-            for (int i=0; i<moves.size();i++){
-                if (moves.get(i).getNumFlipped() > maxFlip){
-                    maxFlip = moves.get(i).getNumFlipped();
-                    m = moves.get(i);
+            if (compType.equals("dumb")) {
+                // random move
+                Random rand = new Random();
+                int num = rand.nextInt(moves.size());
+                m = moves.get(num);
+            } else {
+                int maxFlip = moves.get(0).getNumFlipped();
+                m = moves.get(0);
+                for (int i = 0; i < moves.size(); i++) {
+                    if (moves.get(i).getNumFlipped() > maxFlip) {
+                        maxFlip = moves.get(i).getNumFlipped();
+                        m = moves.get(i);
+                    }
                 }
             }
             Square s1 = m.getSquarePlaced();
