@@ -21,9 +21,18 @@ public class Game {
         Player otherP = players.get(0);
         ArrayList<Move> moves = getValidMoves(currP);
         if (moves.size() > 0) {
-            Random rand = new Random();
-            int num = rand.nextInt(moves.size());
-            Move m = moves.get(num);
+            // random move
+//            Random rand = new Random();
+//            int num = rand.nextInt(moves.size());
+            // max flip move
+            int maxFlip = moves.get(0).getNumFlipped();
+            Move m = moves.get(0);
+            for (int i=0; i<moves.size();i++){
+                if (moves.get(i).getNumFlipped() > maxFlip){
+                    maxFlip = moves.get(i).getNumFlipped();
+                    m = moves.get(i);
+                }
+            }
             Square s1 = m.getSquarePlaced();
             ArrayList<Square> s2 = m.getEndSquare();
             //adjust board in every direction
