@@ -1,7 +1,7 @@
 // Patrick Dundas, Garrett Faucher
 // 4-5-2020
 // CS205 Jason Hibbeler
-
+/*
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -158,3 +158,4 @@ public class AdjustBoardTests {
 
 
 }
+*/
