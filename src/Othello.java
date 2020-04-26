@@ -458,10 +458,13 @@ public class Othello extends Application {
                         //Computer had no valid moves, and now player control must switch
                         g.passTurn();
                     }
-                    for(int i = 0; i < b.getBoard().size(); i++){
-                        b.getBoard().get(i).setMostRecent(false);
-                    }
-                    tp.getSquare().setMostRecent(true);
+//                    for(int i = 0; i < b.getBoard().size(); i++){
+//                        b.getBoard().get(i).setMostRecent(false);
+//                    }
+////                    tp.getSquare().setMostRecent(true);
+                    updateGridPane();
+                    updateTurnText();
+                    updateScore();
                 }
             }
             else {
@@ -478,6 +481,8 @@ public class Othello extends Application {
                         b.getBoard().get(i).setMostRecent(false);
                     }
                     tp.getSquare().setMostRecent(true);
+
+
                 }
             } else {
                 messageText.setText("Invalid Move");

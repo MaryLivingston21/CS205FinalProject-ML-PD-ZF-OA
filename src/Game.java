@@ -33,6 +33,14 @@ public class Game {
             System.out.println("Numflipped: " + m.getNumFlipped());
             currP.adjustScore(m.getNumFlipped() + 1);
             otherP.adjustScore(m.getNumFlipped() * -1);
+
+            for(int i = 0; i < gameBoard.getBoard().size(); i++){
+                gameBoard.getBoard().get(i).setMostRecent(false);
+            }
+            s1.setMostRecent(true);
+
+            System.out.println("Set computer as last");
+
             whoseTurn = otherP;
             return true;
         } else{
