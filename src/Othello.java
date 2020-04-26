@@ -475,15 +475,19 @@ public class Othello extends Application {
                     x = player.getScore() + 1;
                     g.playPiece(tp.getSquare());
                     messageText.setText("Player " + player.getPlayerNumber() + " flipped: "+ (player.getScore() - x) + " piece(s)");
+                    for(int i = 0; i < b.getBoard().size(); i++){
+                        b.getBoard().get(i).setMostRecent(false);
+                    }
+                    tp.getSquare().setMostRecent(true);
                 }
             } else {
                 messageText.setText("Invalid Move");
             }
         }
-        for(int i = 0; i < b.getBoard().size(); i++){
-            b.getBoard().get(i).setMostRecent(false);
-        }
-        tp.getSquare().setMostRecent(true);
+//        for(int i = 0; i < b.getBoard().size(); i++){
+//            b.getBoard().get(i).setMostRecent(false);
+//        }
+//        tp.getSquare().setMostRecent(true);
         updateGridPane();
         updateTurnText();
         updateScore();
