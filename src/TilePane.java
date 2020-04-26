@@ -64,7 +64,8 @@ public class TilePane extends HBox{
         // Set color of piece, depends on tile
         setPlayerControl(s.getUser());
 
-
+        //
+        setBorderWidth();
 
         // if this is the most recently played square
         if(s.isMostRecent()){
@@ -84,6 +85,26 @@ public class TilePane extends HBox{
             this.getChildren().add(piece);
         }
 
+    }
+
+    public void setBorderWidth(){
+        this.setBorder(darkGreenBorder);
+        if(col == 3){
+            if (row == 3){this.setStyle("-fx-border-color:#0A3A2A; -fx-border-width: 3 1 1 3;");}
+            else if(row > 3 && row < 6){this.setStyle("-fx-border-color:#0A3A2A; -fx-border-width: 1 1 1 3;");}
+            else if(row == 6){this.setStyle("-fx-border-color:#0A3A2A; -fx-border-width: 1 1 3 3;");}
+        }
+        if(col == 6){
+            if (row == 3){this.setStyle("-fx-border-color:#0A3A2A; -fx-border-width: 3 3 1 1;");}
+            else if(row > 3 && row < 6){this.setStyle("-fx-border-color:#0A3A2A; -fx-border-width: 1 3 1 1;");}
+            else if(row == 6){this.setStyle("-fx-border-color:#0A3A2A; -fx-border-width: 1 3 3 1;");}
+        }
+        if(row == 3){
+            if(col > 3 && col <6){this.setStyle("-fx-border-color:#0A3A2A; -fx-border-width: 3 1 1 1;");}
+        }
+        if(row == 6){
+            if(col > 3 && col <6){this.setStyle("-fx-border-color:#0A3A2A; -fx-border-width: 1 1 3 1;");}
+        }
     }
     /**
       setPlayer Control method will set the control and change the color of the circle object

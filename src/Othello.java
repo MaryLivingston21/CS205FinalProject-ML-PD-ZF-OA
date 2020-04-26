@@ -239,7 +239,6 @@ public class Othello extends Application {
 
 
         //Construct bottomHBox -> contains buttons and timer(when I add it)
-        //TODO:: Add timer
         bottomHBox.setPadding(new Insets(20));
         bottomHBox.setSpacing(15);
         bottomHBox.setBackground(darkBlueBackground);
@@ -548,7 +547,7 @@ public class Othello extends Application {
         } else {
             playerColor = Color.WHITE;
         }
-        //If tp is not a valid move, will highlight read to indicate not a valid move
+        //If tp is not a valid move, will highlight red to indicate not a valid move
         if(g.isValidMove(g.getCurrentPlayer(),tp.getSquare()) == null){
             if(tp.getControl() == 0){
                 tp.changePieceColor(playerColor);
@@ -565,6 +564,7 @@ public class Othello extends Application {
         tp.setPlayerControl(tp.getControl());
         tp.setBorder(darkGreenBorder);
         tp.setBackground(mediumBlueBackground);
+        updateGridPane();
     }
 
     /**
