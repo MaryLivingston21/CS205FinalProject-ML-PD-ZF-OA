@@ -594,8 +594,8 @@ public class Othello extends Application {
             else{
                 winnerText.setText("Tie...embarrassing");
             }
-            finalScoreText.setText("Final Score: \n\n\nYou           - " + g.getPlayer(0).getScore() +
-                    "\nComputer - " + g.getPlayer(1).getScore());
+            finalScoreText.setText("Final Score: \n\n\nYou           : " + g.getPlayer(0).getScore() +
+                    "\nComputer : " + g.getPlayer(1).getScore());
         }
         else{
             if(g.getPlayer(0).getScore()>g.getPlayer(1).getScore()){
